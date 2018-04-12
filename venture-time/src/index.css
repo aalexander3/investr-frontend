@@ -3,3 +3,20 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+
+.container {
+  width: 20%;
+  margin: 10% 0% 0 0%;
+  left: 39%;
+  position: absolute;
+}
+
+.login-buttons {
+  display: inline;
+  margin-right: 1em;
+}
+
+#message-nav {
+  float: right;
+}
