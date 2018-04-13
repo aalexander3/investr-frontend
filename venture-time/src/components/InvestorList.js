@@ -28,13 +28,11 @@ export default class InvestorList extends React.Component {
   makeInvestorCard = () => {
     if (this.state.investors.length > 0){
       const filteredUser = this.filterUser(1)
-      console.log(filteredUser);
       return <InvestorCard investor={filteredUser} attributes={filteredUser.attributes}/>
     }
   }
 
   render(){
-    console.log(this.state);
     return(
       <div>
         {this.makeInvestorCard()}
