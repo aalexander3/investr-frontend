@@ -1,11 +1,12 @@
 import React from 'react'
-// import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Icon } from 'antd';
 
 const MatchPage = () => {
 
   return(
     <div className='container'>
-      HI from Match PAge
+      <Icon type="star" />
+      <Icon type="star-o" />
     </div>
   )
 }

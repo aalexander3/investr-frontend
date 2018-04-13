@@ -21,15 +21,15 @@ export default class InvestorList extends React.Component {
   }
 
   filterUser = (id) => {
-    const filtered = this.state.investors.filter(investor => investor.id == id)
-    console.log(filtered);
-    return filtered
+    // filter by username instead
+    return this.state.investors.filter(investor => parseInt(investor.id) === id)[0]
   }
 
   makeInvestorCard = () => {
-    if (this.state.investors !== []){
+    if (this.state.investors.length > 0){
       const filteredUser = this.filterUser(1)
-      return <InvestorCard investor={filteredUser}/>
+      console.log(filteredUser);
+      return <InvestorCard investor={filteredUser} attributes={filteredUser.attributes}/>
     }
   }
 
@@ -37,7 +37,6 @@ export default class InvestorList extends React.Component {
     console.log(this.state);
     return(
       <div>
-        HEY WORLD HERE I COME
         {this.makeInvestorCard()}
       </div>
     )

@@ -7,7 +7,7 @@ class SettingsPage extends React.Component {
 
   render() {
     return(
-      <div className='container'>
+      <div>
         <InvestorList />
       </div>
     )
