@@ -28,13 +28,12 @@ class App extends Component {
         loggedIn: !this.state.form.loggedIn
       }
     }, () => {
-      history.push("/")
+      history.push("/settings")
       //lets remember how to do pushState(state, title, url)
     })
   }
 
   handleChange = (event) => {
-    console.log(event.target.value);
     this.setState({
       form: {
         ...this.state.form,
@@ -47,7 +46,11 @@ class App extends Component {
     return (
       <div>
         <NavBar />
-        <Route exact path='/' component={MatchPage}/>
+        <Route exact path='/' render={ (renderProps) => {
+          return <MatchPage
+            username={this.state.form.username}
+            password={this.state.form.password}/>
+          }} />
         <Route exact path='/login' render={ (renderProps) => {
           return <Login submitForm={this.submitForm}
             username={this.state.form.username}
@@ -55,9 +58,16 @@ class App extends Component {
             history={ renderProps.history }
             handleChange={this.handleChange}/>
           }} />
-        <Route exact path='/settings' component={SettingsPage}/>
-        <Route exact path='/messages' component={MessagePage}/>
-
+        <Route exact path='/settings' render={ (renderProps) => {
+          return <SettingsPage
+            username={this.state.form.username}
+            password={this.state.form.password}/>
+          }} />
+          <Route exact path='/messages' render={ (renderProps) => {
+            return <MessagePage
+              username={this.state.form.username}
+              password={this.state.form.password}/>
+            }} />
       </div>
     );
   }

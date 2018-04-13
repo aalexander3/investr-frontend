@@ -6,8 +6,6 @@ const MatchPage = () => {
 
   return(
     <div>
-      <Icon type="star" />
-      <Icon type="star-o" />
       <StartUpList />
     </div>
   )

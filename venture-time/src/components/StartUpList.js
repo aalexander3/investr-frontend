@@ -1,4 +1,4 @@
-import { Carousel } from 'antd';
+import { Carousel, Row } from 'antd';
 import React from 'react'
 import StartUpCard from "./StartUpCard.js"
 const URL = 'http://localhost:3000/api/v1/start_ups'
@@ -32,9 +32,8 @@ class StartUpList extends React.Component {
 
     return(
       <div>
-        {this.makeStartUpCards()}
         <Carousel afterChange={this.onChange}>
-          <div>{this.makeStartUpCards(0,3)}</div>
+          <Row>{this.makeStartUpCards(0,3)}</Row>
           <div>{this.makeStartUpCards(3,6)}</div>
           <div>{this.makeStartUpCards(6,9)}</div>
           <div>{this.makeStartUpCards(9,12)}</div>

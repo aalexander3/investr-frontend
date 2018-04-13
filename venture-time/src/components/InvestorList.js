@@ -17,22 +17,24 @@ export default class InvestorList extends React.Component {
   fetchUser = () => {
     fetch(URL)
       .then(resp => resp.json())
-      .then(investors => this.setState({ investors: investors.data }))
+      .then(investors => this.setState({investors: investors.data }))
   }
 
-  filterUser = (id) => {
+  filterUser = () => {
     // filter by username instead
-    return this.state.investors.filter(investor => parseInt(investor.id) === id)[0]
+
+    return this.state.investors.filter(investor => investor.attributes.username === this.props.username)[0]
   }
 
   makeInvestorCard = () => {
-    if (this.state.investors.length > 0){
-      const filteredUser = this.filterUser(1)
+    if (this.props.username && (this.state.investors.length > 0)){
+      const filteredUser = this.filterUser()
       return <InvestorCard investor={filteredUser} attributes={filteredUser.attributes}/>
     }
   }
 
   render(){
+    console.log(this.state.investors);
     return(
       <div>
         {this.makeInvestorCard()}

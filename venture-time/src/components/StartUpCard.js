@@ -1,12 +1,14 @@
 import React from "react"
-import {Card} from 'antd'
+import {Card, Col} from 'antd'
 
 const StartUpCard = props => {
   return (
     <div>
-      <Card>
-        {props.attributes.name}
-      </Card>
+      <Col span={8}>
+        <Card>
+          {props.startUp.attributes.name}
+        </Card>
+      </Col>
     </div>
   )
 }

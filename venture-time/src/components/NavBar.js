@@ -17,6 +17,9 @@ return(
       <Menu.Item key="message" style={{"float":"right"}}>
         <Link to='/messages'><Icon type="coffee" />Messages</Link>
       </Menu.Item>
+      <Menu.Item key="login" style={{"float":"right"}}>
+        <Link to='/login'><Icon type="coffee" />Login</Link>
+      </Menu.Item>
     </Menu>
   </div>
 )
