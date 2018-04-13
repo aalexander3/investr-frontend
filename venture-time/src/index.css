@@ -56,5 +56,13 @@ div.ant-layout-content {
 }
 
 .ant-carousel .slick-slide h3 {
-  color: #fff;
+  color: #EDEDEF;
+}
+
+.start-up-card {
+  background: #EDEDEF;
+  height: 300px;
+
+  border: solid lightgray;
+
 }
