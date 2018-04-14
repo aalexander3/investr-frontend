@@ -20,7 +20,6 @@ const InvestorCard = (props) => {
       },
     ];
 
-  console.log(props);
 
   function onPanelChange(value, mode) {
     console.log(value, mode);

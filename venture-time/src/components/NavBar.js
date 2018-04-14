@@ -3,7 +3,7 @@ import { Menu, Icon } from 'antd';
 import {Link} from 'react-router-dom'
 
 
-const NavBar = () => {
+const NavBar = (props) => {
 
 return(
   <div>
@@ -18,7 +18,7 @@ return(
         <Link to='/messages'><Icon type="coffee" />Messages</Link>
       </Menu.Item>
       <Menu.Item key="login" style={{"float":"right"}}>
-        <Link to='/login'><Icon type="coffee" />Login</Link>
+        { (props.loggedIn) ? <Link to='/login' onClick={props.logout} ><Icon type="coffee" />Logout</Link> : <Link to='/login'><Icon type="coffee" />Login</Link> }
       </Menu.Item>
     </Menu>
   </div>

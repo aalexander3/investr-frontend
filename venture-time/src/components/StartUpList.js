@@ -22,27 +22,27 @@ class StartUpList extends React.Component {
   }
 
   makeStartUpCards = (start, end) => {
-    return this.state.startUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} />)
+    return this.state.startUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} />)
   }
 
-  onChange(a, b, c) {
-    console.log(a, b, c);
-  }
+  // onChange(a, b, c) {
+  //   console.log(a, b, c);
+  // }
 
   render() {
-
     return(
-      <div>
+      <div style={{margin:'1% 4%'}}>
         <Header style={{background: 'white'}}>
           <h1>Your startup's favorite startups</h1>
         </Header>
          <Divider />
-        <Carousel id="carousel-list" afterChange={this.onChange}>
-          <div>{this.makeStartUpCards(0,3)}</div>
-          <div>{this.makeStartUpCards(3,6)}</div>
+         {/* think about how we might get a carousel back  */}
+        {/* <Carousel id="carousel-list" afterChange={this.onChange}> */}
+          <div className='start-up-container'>{this.makeStartUpCards()}</div>
+          {/* <div>{this.makeStartUpCards(3,6)}</div>
           <div>{this.makeStartUpCards(6,9)}</div>
-          <div>{this.makeStartUpCards(9,12)}</div>
-        </Carousel>
+          <div>{this.makeStartUpCards(9,12)}</div> */}
+        {/* </Carousel> */}
       </div>
     )
   }

@@ -2,11 +2,11 @@ import React from 'react'
 import { Icon } from 'antd';
 import StartUpList from "./StartUpList.js"
 
-const MatchPage = () => {
+const MatchPage = (props) => {
 
   return(
     <div>
-      <StartUpList />
+      <StartUpList username={props.username}/>
     </div>
   )
 }

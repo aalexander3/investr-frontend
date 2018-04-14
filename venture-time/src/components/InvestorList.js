@@ -34,7 +34,6 @@ export default class InvestorList extends React.Component {
   }
 
   render(){
-    console.log(this.state.investors);
     return(
       <div>
         {this.makeInvestorCard()}
