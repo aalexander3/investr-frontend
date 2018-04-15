@@ -1,6 +1,8 @@
 import { Carousel, Row, Layout, Divider } from 'antd';
 import React from 'react'
 import StartUpCard from "./StartUpCard.js"
+import Filter from "./Filter.js"
+
 const { Header, Content, Sider, Footer } = Layout
 const URL = 'http://localhost:3000/api/v1/start_ups'
 
@@ -8,7 +10,8 @@ const URL = 'http://localhost:3000/api/v1/start_ups'
 class StartUpList extends React.Component {
 
   state = {
-    startUps: []
+    startUps: [],
+    value: ""
   }
 
   componentDidMount(){
@@ -29,12 +32,19 @@ class StartUpList extends React.Component {
   //   console.log(a, b, c);
   // }
 
+  onChange = (event) => {
+    this.setState({
+      value: event.target.value
+    }, () => console.log(this.state.value))
+  }
+
   render() {
     return(
       <div style={{margin:'1% 4%'}}>
         <Header style={{background: 'white'}}>
           <h1>Your startup's favorite startups</h1>
         </Header>
+        <Filter onChange={this.onChange}/>
          <Divider />
          {/* think about how we might get a carousel back  */}
         {/* <Carousel id="carousel-list" afterChange={this.onChange}> */}

@@ -10,7 +10,7 @@ class StartUpCard extends React.Component {
   handleClick = () => {
     this.setState({
       details: !this.state.details
-    }, () => console.log(this.state.details))
+    })
   }
 
   showTheDeets = () => {
