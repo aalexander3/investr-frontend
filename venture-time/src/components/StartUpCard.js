@@ -42,7 +42,6 @@ class StartUpCard extends React.Component {
 
 
     render() {
-      console.log(this.props.startUp);
       if (!this.state.disliked) {
         return (
           <div>
