@@ -11,7 +11,8 @@ class StartUpList extends React.Component {
 
   state = {
     startUps: [],
-    value: ""
+    value: "",
+    filteredStartUps: []
   }
 
   componentDidMount(){
@@ -28,6 +29,10 @@ class StartUpList extends React.Component {
     return this.state.startUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} />)
   }
 
+  makeFilteredStartUpCards = (start, end) => {
+    return this.state.filteredStartUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} />)
+  }
+
   // onChange(a, b, c) {
   //   console.log(a, b, c);
   // }
@@ -35,20 +40,25 @@ class StartUpList extends React.Component {
   onChange = (event) => {
     this.setState({
       value: event.target.value
-    }, () => console.log(this.state.value))
+    }, () => {
+      this.setState({
+        filteredStartUps: this.state.startUps.filter((startUp) => {return startUp.attributes.name.toLowerCase().includes(this.state.value)})
+      }, () => console.log(this.state.filteredStartUps))
+    })
   }
+
 
   render() {
     return(
       <div style={{margin:'1% 4%'}}>
         <Header style={{background: 'white'}}>
-          <h1>Your startup's favorite startups</h1>
+          <h1>Your startups favorite startups</h1>
         </Header>
         <Filter onChange={this.onChange}/>
          <Divider />
          {/* think about how we might get a carousel back  */}
         {/* <Carousel id="carousel-list" afterChange={this.onChange}> */}
-          <div className='start-up-container'>{this.makeStartUpCards()}</div>
+          {this.state.filteredStartUps.length > 0 ? <div className='start-up-container'>{this.makeFilteredStartUpCards()}</div> : <div className='start-up-container'>{this.makeStartUpCards()}</div>}
           {/* <div>{this.makeStartUpCards(3,6)}</div>
           <div>{this.makeStartUpCards(6,9)}</div>
           <div>{this.makeStartUpCards(9,12)}</div> */}
