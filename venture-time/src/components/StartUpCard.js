@@ -1,10 +1,11 @@
 import React from "react"
-import {Card, Col, Divider, Rate, Icon, Button } from 'antd'
+import { Col, Divider, Icon, Button, Alert } from 'antd'
 
 class StartUpCard extends React.Component {
   state = {
     details: false,
-    disliked: false
+    disliked: false,
+    errors: null
   }
 
   handleClick = () => {
@@ -31,7 +32,11 @@ class StartUpCard extends React.Component {
         "Accepts" : "application/json",
         'Content-type': "application/json"
       }
-    }).then(res => res.json()).then(console.log)
+    }).then(res => res.json()).then(json => {
+      console.log(json);
+      (json.errors) ? this.setState({errors: json.errors}) : null;
+
+    })
   }
 
   handleDisLikes = () => {
@@ -46,6 +51,7 @@ class StartUpCard extends React.Component {
         return (
           <div>
             <Col className="start-up-card" span={8}>
+              {(this.state.errors) ? <Alert message={this.state.errors} type="error" /> : null }
 
               <div className='card-floater'>
                 <img src={this.props.startUp.attributes.logo} className='card-logo' align="middle" />

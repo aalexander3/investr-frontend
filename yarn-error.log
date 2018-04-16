@@ -1,0 +1,32 @@
+Arguments: 
+  /Users/aralx73/.nvm/versions/node/v6.11.2/bin/node /Users/aralx73/.nvm/versions/node/v6.11.2/bin/yarn start
+
+PATH: 
+  /Users/aralx73/.nvm/versions/node/v6.11.2/bin:/Users/aralx73/.rvm/gems/ruby-2.3.3/bin:/Users/aralx73/.rvm/gems/ruby-2.3.3@global/bin:/Users/aralx73/.rvm/rubies/ruby-2.3.3/bin:/Applications/Postgres.app/Contents/Versions/latest/bin:/usr/local:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/aralx73/.rvm/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  6.11.2
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/Users/aralx73/Development/code/mod4/projects/venture-time-fronted"
+      at MessageError.Error (native)
+      at new MessageError (/Users/aralx73/.nvm/versions/node/v6.11.2/lib/node_modules/yarn/lib/cli.js:186:110)
+      at /Users/aralx73/.nvm/versions/node/v6.11.2/lib/node_modules/yarn/lib/cli.js:40048:15
+      at next (native)
+      at step (/Users/aralx73/.nvm/versions/node/v6.11.2/lib/node_modules/yarn/lib/cli.js:98:30)
+      at /Users/aralx73/.nvm/versions/node/v6.11.2/lib/node_modules/yarn/lib/cli.js:109:13

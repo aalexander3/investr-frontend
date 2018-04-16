@@ -9,27 +9,25 @@ import SettingsPage from './SettingsPage'
 import MatchPage from './MatchPage'
 import MessagePage from './MessagePage'
 
-
-
+const URL = "http://localhost:3000/api/v1/investors"
 
 class App extends Component {
   state = {
     form: {
       loggedIn: false,
-      username: '',
+      username: 'arren',
       password: ''
-    }
+    },
+    investors: []
   }
 
   submitForm = (history) => {
-    console.log('wow form submitted');
     this.setState({
       form: {
         ...this.state.form,
         loggedIn: true
       }
     }, () => {
-      console.log(this.state.form);
       history.push("/settings")
     })
   }
@@ -40,7 +38,7 @@ class App extends Component {
         ...this.state.form,
         [event.target.name]: event.target.value
       }
-    }, () => console.log(this.state.form))
+    })
   }
 
   logout = (event) => {
@@ -51,6 +49,23 @@ class App extends Component {
         password: ''
       }
     })
+  }
+
+  componentDidMount() {
+    console.log('app mounted');
+    this.fetchUser()
+  }
+
+  fetchUser = () => {
+    fetch(URL)
+      .then(resp => resp.json())
+      .then(investors => this.setState({investors: investors.data }))
+  }
+
+  filterUser = () => {
+    return this.state.investors.filter(investor => {
+      return investor.attributes.username === this.state.form.username
+    })[0]
   }
 
   render() {
@@ -72,13 +87,17 @@ class App extends Component {
           }} />
         <Route exact path='/settings' render={ (renderProps) => {
           return <SettingsPage
+            filterUser={this.filterUser}
+            investors={this.state.investors}
             username={this.state.form.username}
             password={this.state.form.password}/>
           }} />
           <Route exact path='/messages' render={ (renderProps) => {
             return <MessagePage
+              filterUser={this.filterUser}
+              investors={this.state.investors}
               username={this.state.form.username}
-              password={this.state.form.password}/>
+              password={this.state.form.password} />
             }} />
       </div>
     );

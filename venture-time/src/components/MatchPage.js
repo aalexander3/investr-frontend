@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from 'antd';
+
 import StartUpList from "./StartUpList.js"
 
 const MatchPage = (props) => {

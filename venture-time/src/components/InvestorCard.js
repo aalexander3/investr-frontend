@@ -1,84 +1,88 @@
 import React from 'react'
-import { Layout, Card, Avatar, Icon, Calendar, Row, Col, List} from 'antd';
-const { Header, Content, Sider, Footer } = Layout
-const { Meta } = Card;
+import { Layout, Avatar, Icon, List, Divider} from 'antd';
+const { Header, Content, Sider } = Layout
 
-const InvestorCard = (props) => {
+const URL = 'http://localhost:3000/api/v1/start_up_investors'
 
-  const data = [
-      {
-        title: 'Company 1',
-      },
-      {
-        title: 'Company 2',
-      },
-      {
-        title: 'Company 3',
-      },
-      {
-        title: 'Company 4',
-      },
-    ];
+class InvestorCard extends React.Component {
 
+  state = {
+    startUps: []
+  }
 
-  function onPanelChange(value, mode) {
+  onPanelChange(value, mode) {
     console.log(value, mode);
   }
 
-  // make stuff happen here
-  return(
-    <div>
-      <Layout hasSider={true}>
-      <Content>
-        <div className="card-banner">
-            <Header className="card-header">
-              {(props.attributes) ? <img id="card-avatar" src={props.attributes.logo}/> : null}
-              <h1>{props.attributes.name}</h1>
-              <p>{props.attributes.mission}</p>
-            </Header>
-        </div>
+  componentDidMount = () => {
+    fetch(URL).then(res => res.json()).then(json => {
+      const filteredList = json.data.filter(startUp => startUp.attributes.investor.username === this.props.attributes.username)
+      const newFilter = filteredList.map(startUp => {
+        return {name: startUp.attributes['start-up'].name, logo: startUp.attributes['start-up'].logo, url: startUp.attributes['start-up'].url}
+      })
 
-        <div id="row-wrapper">
-          <Row type="flex" justify="space-around" align="middle">
-            <Col span={12}>
-              <Card
-                style={{ width: 300 }}
-                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-              >
-                <Meta
-                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={props.attributes.name}
-                  description={props.attributes.description}
+      this.setState({
+        startUps: newFilter
+      }, () => console.log(this.state.startUps))
+    })
+  }
+
+  // investor": {
+  //         "id": 3,
+  //         "name": "Arren Alexander",
+  //         "mission": "Help exciting new companies grow",
+  //         "description": "Small investing firm looking for new investment opportunities",
+  //         "interests": null,
+  //         "logo": "https://images.unsplash.com/photo-1504670073073-6123e39e0754?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=23c233a430f2ca6be8d78f8608b416d5&auto=format&fit=crop&w=1050&q=80",
+  //         "url": "https://www.linkedin.com/in/arren-alexander-10a361124",
+  //         "funds_to_invest": 1200000,
+  //         "active": true,
+  //         "created_at": "2018-04-13T18:51:51.108Z",
+  //         "updated_at": "2018-04-13T18:51:51.108Z",
+  //         "username": "arren",
+  //         "password_digest": "$2a$10$jW/2LefIcnc1DzLrwccYvuUOSqjZ.7xwtP0kUkvPYIHsK3V2EMY3C"
+  //       }
+
+  render(){
+    console.log(this.props);
+    return(
+      <div>
+        <Layout hasSider={true}>
+        <Content>
+          <div className="card-banner">
+              <img className="cover-photo" src='http://s3.amazonaws.com/s3.timetoast.com/public/uploads/photos/6327469/blurry-blue-background-ii_facebook_timeline_cover.jpg?1477360789' />
+              {(this.props.attributes) ? <img id="card-avatar" src={this.props.attributes.logo} alt="company logo" /> : null}
+              <h1>{this.props.attributes.name}</h1>
+              <strong>{this.props.attributes.interests}</strong><br/>
+              <strong> New York, NY </strong> || <span>   {this.state.startUps.length} <Icon type="team" /></span>
+              <p>{this.props.attributes.mission}</p>
+              <Divider />
+              <p> {this.props.attributes.description} </p>
+              <span> <Icon type="link" /> <a href={this.props.attributes.url}> Visit </a></span>
+              <span> ||  <Icon type="credit-card" />  {(this.props.attributes['funds-to-invest'] > 1000000) ? '$$$$' : '$$'} </span>
+          </div>
+        </Content>
+        <div id='investor-card-sider' >
+          <Sider style={{background: '#EDEDEF'}}>
+            <h3>My Connections</h3>
+            <List
+              itemLayout="horizontal"
+              dataSource={this.state.startUps}
+              renderItem={item => (
+                <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.logo} />}
+                  title={<a href={item.url}>{item.name}</a>}
                 />
-
-              </Card>
-            </Col>
-            <Col span={12}>
-              <div className="calendar-div" style={{ width: 300, border: '1px solid #d9d9d9', borderRadius: 4 }}>
-                <Calendar fullscreen={false} onPanelChange={onPanelChange} />
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </Content>
-      <Sider style={{ overflow: 'scroll', background: '#EDEDEF'}}>
-        <h3>My Connections</h3>
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={item => (
-            <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-              title={<a href="https://ant.design">{item.title}</a>}
+                </List.Item>
+              )}
             />
-            </List.Item>
-          )}
-        />
-      </Sider>
-    </Layout>
-    </div>
-  )
+          </Sider>
+        </div>
+      </Layout>
+      </div>
+    )
+  }
 }
 
 export default InvestorCard

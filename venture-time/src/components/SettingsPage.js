@@ -6,9 +6,10 @@ import InvestorList from './InvestorList'
 class SettingsPage extends React.Component {
 
   render() {
+    console.log(this.props);
     return(
       <div>
-        <InvestorList username={this.props.username}/>
+        <InvestorList investors={this.props.investors} filterUser={this.props.filterUser} username={this.props.username}/>
       </div>
     )
   }

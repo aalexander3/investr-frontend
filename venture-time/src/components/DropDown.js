@@ -1,19 +1,20 @@
 import React from "react"
+import { Select } from 'antd'
+const Option = Select.Option;
 
 class DropDown extends React.Component {
 
 
   render(){
     return (
-      <div>
-        Search By Field:
-        <select onChange={this.props.onChange}>
-          <option value="all"  >Select All</option>
-          <option value="Technology"  >Technology</option>
-          <option value="Food"  >Food</option>
-          <option value="Finance"  >Finance</option>
-          <option value="Healthcare"  >Healthcare</option>
-        </select>
+      <div className='filter-search'>
+        <Select defaultValue='all' onChange={this.props.onChange}>
+          <Option value="all"  >All Fields</Option>
+          <Option value="Technology"  >Technology</Option>
+          <Option value="Food"  >Food</Option>
+          <Option value="Finance"  >Finance</Option>
+          <Option value="Healthcare"  >Healthcare</Option>
+        </Select>
       </div>
     )
   }
