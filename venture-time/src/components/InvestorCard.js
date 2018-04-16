@@ -27,22 +27,6 @@ class InvestorCard extends React.Component {
     })
   }
 
-  // investor": {
-  //         "id": 3,
-  //         "name": "Arren Alexander",
-  //         "mission": "Help exciting new companies grow",
-  //         "description": "Small investing firm looking for new investment opportunities",
-  //         "interests": null,
-  //         "logo": "https://images.unsplash.com/photo-1504670073073-6123e39e0754?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=23c233a430f2ca6be8d78f8608b416d5&auto=format&fit=crop&w=1050&q=80",
-  //         "url": "https://www.linkedin.com/in/arren-alexander-10a361124",
-  //         "funds_to_invest": 1200000,
-  //         "active": true,
-  //         "created_at": "2018-04-13T18:51:51.108Z",
-  //         "updated_at": "2018-04-13T18:51:51.108Z",
-  //         "username": "arren",
-  //         "password_digest": "$2a$10$jW/2LefIcnc1DzLrwccYvuUOSqjZ.7xwtP0kUkvPYIHsK3V2EMY3C"
-  //       }
-
   render(){
     console.log(this.props);
     return(

@@ -32,10 +32,6 @@ class StartUpCard extends React.Component {
         "Accepts" : "application/json",
         'Content-type': "application/json"
       }
-    }).then(res => res.json()).then(json => {
-      console.log(json);
-      (json.errors) ? this.setState({errors: json.errors}) : null;
-
     })
   }
 
