@@ -107,3 +107,31 @@ img.card-logo {
   display: inline;
   margin-right: 1em;
 }
+
+.like-stamp {
+  width: 70%;
+  position: absolute;
+  left: 36px;
+  top: 58px;
+  transform: rotate(-20deg);
+  z-index: 10;
+}
+
+#message-window {
+  margin: 4%;
+  border: solid #95D4E5;
+  padding: 2%;
+}
+
+#new-message-form{
+  width: 60%;
+  display: inline;
+}
+
+#message-box{
+  height: 23rem;
+  overflow: scroll;
+  margin-bottom: 2%;
+  line-height: 1rem;
+  scroll-behavior: smooth;
+}

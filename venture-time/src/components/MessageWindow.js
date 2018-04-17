@@ -1,5 +1,5 @@
 import React from 'react'
-import {Input, Button} from 'antd'
+import {Input, Button, Divider} from 'antd'
 
 const Search = Input.Search
 const URL = 'http://localhost:3000/api/v1/messages'
@@ -8,7 +8,7 @@ class MessageWindow extends React.Component {
   // can hold message bodies and new message text form
   state = {
     formValue: null,
-    conversations: []
+    conversations: this.props.filteredMessages()
   }
 
   sendTheMessage = (event) => {
@@ -36,11 +36,18 @@ class MessageWindow extends React.Component {
     })
   }
 
+  // id: 1, message_body: "hi blend i like you", username: "arren", start_up_investor_id: 1, created_at: "2018-04-16T20:56:52.041Z", …}
+
   makeMessages = () => {
     return this.state.conversations.map(message => {
-      console.log("im here in make messages");
+      let date = new Date(message.created_at)
       return (
-        <div>{message.message_body}</div>
+        <div>
+          <strong>{message.username}: </strong>
+          <span>{" " + message.message_body}</span>
+          <p>{date.toString().slice(0, -18)}</p>
+          <Divider />
+        </div>
       )
     })
   }
@@ -48,12 +55,13 @@ class MessageWindow extends React.Component {
   render(){
     return (
     <div id='message-window'>
-      <div>{this.makeMessages()}</div>
-      <Input placeholder="enter your message" size="large" value={this.state.formValue} onChange={this.changing}></Input>
-      <Button type="primary" onClick={this.sendTheMessage}>Send</Button>
+      <div id='message-box'>{this.makeMessages()}</div>
+      <div id='new-message-form'>
+        <Input style={{width: '60%'}} placeholder="enter your message" size="large" value={this.state.formValue} onChange={this.changing}></Input>
+        <Button type="primary" onClick={this.sendTheMessage}>Send</Button>
+      </div>
     </div>)
   }
 }
-
 
 export default MessageWindow

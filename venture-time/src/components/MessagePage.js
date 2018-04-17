@@ -45,6 +45,8 @@ class MessagePage extends React.Component {
   startNewMessage = conversation => {
     this.setState({
       currentConvo: conversation
+    }, () => {
+      this.goToBottom()
     })
   }
 
@@ -72,6 +74,12 @@ class MessagePage extends React.Component {
       conversations: conversations,
       messages: [...this.state.messages, message]
      })
+    this.goToBottom()
+  }
+
+  goToBottom = () => {
+    let element = document.getElementById('message-box')
+    element.scrollTop = element.scrollHeight - element.clientHeight
   }
 
   filterMessages = () => {
@@ -102,7 +110,7 @@ class MessagePage extends React.Component {
             handleReceivedMessage={this.handleReceivedMessage}
           />
         ) : null}
-        {this.state.currentConvo ? <MessageWindow filteredMessages={this.filterMessages} username ={this.props.username} conversation={this.state.currentConvo} conversations={this.state.conversations} /> : null}
+        {this.state.currentConvo ? <MessageWindow goToBottom={this.goToBottom} filteredMessages={this.filterMessages} username ={this.props.username} conversation={this.state.currentConvo} conversations={this.state.conversations} /> : null}
       </div>
     )
   }
