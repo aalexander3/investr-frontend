@@ -46,9 +46,16 @@ class StartUpCard extends React.Component {
     })
   }
 
+  makeButtonsAppear = () => {
+    return (
+      <div>
+        {this.state.liked ? <img className='like-stamp' src={process.env.PUBLIC_URL + '/like-stamp.png'} /> : <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
+        <Button type="default" icon="dislike" size='small' className='login-buttons' onClick={this.handleDisLikes}>NO THANKS</Button>
+      </div>
+    )
+  }
 
     render() {
-      console.log(this.props);
       if (!this.state.disliked) {
         return (
           <div>
@@ -58,8 +65,7 @@ class StartUpCard extends React.Component {
               <div className='card-floater'>
                 <img src={this.props.startUp.attributes.logo} className='card-logo' align="middle" />
                 <br/>
-                {this.state.liked ? <img className='like-stamp' src={process.env.PUBLIC_URL + '/like-stamp.png'} /> : <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
-                <Button type="default" icon="dislike" size='small' className='login-buttons' onClick={this.handleDisLikes}>NO THANKS</Button>
+                {this.props.currentUser.type === 'investors' ? this.makeButtonsAppear() : <strong>Investor</strong>}
                 <Divider/>
               </div>
 
@@ -75,8 +81,8 @@ class StartUpCard extends React.Component {
             </Col>
           </div>
         )
-    } else {
-      return null
+      } else {
+        return null
     }
   }
 }

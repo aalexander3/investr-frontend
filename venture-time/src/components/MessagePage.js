@@ -1,15 +1,13 @@
 import React from 'react'
-import { Layout, Avatar, Popover } from 'antd';
+import { Layout} from 'antd';
 import MessageAvatar from "./MessageAvatar.js"
 import { ActionCable } from 'react-actioncable-provider';
-import { API_ROOT } from '../constants';
+// import { API_ROOT } from '../constants';
 import Cable from './Cable';
 import MessageWindow from './MessageWindow'
 
-
-const { Header, Footer, Sider } = Layout
+const { Header } = Layout
 const URL = 'http://localhost:3000/api/v1/start_up_investors'
-
 
 class MessagePage extends React.Component {
 
@@ -21,14 +19,18 @@ class MessagePage extends React.Component {
 
   componentDidMount = () => {
     fetch(URL).then(res => res.json()).then(json => {
-      const filteredList = json.data.filter(startUp => startUp.attributes.investor.username === this.props.username)
+
+
+      const filteredList = json.data.filter(connection => {
+        return (this.props.currentUser.type === 'investors') ? connection.attributes.investor.username === this.props.username : connection.attributes['start-up'].username === this.props.username
+      })
 
       const messageList = this.mapTheMess(json.data)
 
       this.setState({
         conversations: filteredList,
         messages: messageList
-      }, () => console.log(this.state))
+      })
     })
   }
 
@@ -51,8 +53,9 @@ class MessagePage extends React.Component {
   }
 
   renderStartups = () => {
+    console.log(this.state.conversations);
     return this.state.conversations.map(conversation => {
-    return (<MessageAvatar conversation={conversation} startNewMessage={this.startNewMessage}/>)
+    return (<MessageAvatar type={this.props.currentUser.type} conversation={conversation} startNewMessage={this.startNewMessage}/>)
       })
   }
 
@@ -93,13 +96,12 @@ class MessagePage extends React.Component {
   getMessages() {
     fetch(URL)
       .then(resp => resp.json())
-      .then(json => console.log(json.conversations))
   }
 
   render() {
     return(
       <div>
-        <Header style={{background:"#EDEDEF"}}>{this.renderStartups()}</Header>
+        <Header style={{background:"#3B627E"}}>{this.renderStartups()}</Header>
         <ActionCable
           channel={{ channel: 'StartUpInvestorsChannel' }}
           onReceived={this.handleReceivedConversation}

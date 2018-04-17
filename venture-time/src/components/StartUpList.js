@@ -35,14 +35,14 @@ class StartUpList extends React.Component {
 
   makeStartUpCards = (start, end) => {
     if (this.props.currentUser.type === "start-ups") {
-      return this.state.investors.slice(start, end).map((investor) =>  <StartUpCard key={investor.id} startUp={investor} username={this.props.username} />)
+      return this.state.investors.slice(start, end).map((investor) =>  <StartUpCard key={investor.id} startUp={investor} username={this.props.username} currentUser={this.props.currentUser} />)
     } else {
-      return this.state.startUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} />)
+      return this.state.startUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} currentUser={this.props.currentUser} />)
     }
   }
 
   makeFilteredStartUpCards = (start, end) => {
-    return this.state.filteredStartUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} />)
+    return this.state.filteredStartUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} currentUser={this.props.currentUser} />)
   }
 
   onChange = (event) => {
@@ -72,7 +72,7 @@ class StartUpList extends React.Component {
     return(
       <div style={{margin:'1% 4%'}}>
         <Header style={{background: 'white'}}>
-          <h1>Your startups favorite startups</h1>
+          {this.props.currentUser.type === 'investors' ? <h1>Your startups favorite startups</h1> : <h1>I'm an investor, invested in investing</h1>}
         </Header>
         <Filter onChange={this.onChange}/>
         {this.props.currentUser.type === 'investors'? <DropDown onChange={this.onDropDownChange}/> : null}

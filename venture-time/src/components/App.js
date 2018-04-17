@@ -17,7 +17,7 @@ class App extends Component {
   state = {
     form: {
       loggedIn: false,
-      username: '',
+      username: 'pilotworks',
       password: ''
     },
     investors: [],
@@ -123,6 +123,7 @@ class App extends Component {
           }} />
           <Route exact path='/messages' render={ (renderProps) => {
             return <MessagePage
+              currentUser={this.state.currentUser}
               filterUser={this.findUser}
               investors={this.state.investors}
               username={this.state.form.username}
