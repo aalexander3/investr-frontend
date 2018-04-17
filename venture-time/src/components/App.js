@@ -21,12 +21,14 @@ class App extends Component {
       username: '',
       password: '',
       passwordConfirmation: '',
+      name: '',
       misison: '',
       description: '',
       interests: '',
       url: '',
       logo: '',
-      type: ''
+      type: '',
+      funds_to_invest: 0
     },
     investors: [],
     startUps: [],
@@ -51,7 +53,7 @@ class App extends Component {
   }
 
   submitForm = (history) => {
-  if (this.state.signingUp){
+  if (this.state.form.signingUp) {
     this.register(history)
   } else if (this.state.form.username !== '') {
     this.setState({
@@ -67,8 +69,34 @@ class App extends Component {
 
   register = (history) => {
     if (this.state.form.type === 'startup') {
-      
+      fetch(startUpURL, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(this.state.form)
+      }).then(json => {
+        console.log(json)
+        this.setState({
+          signingUp: false
+        }, () => this.submitForm(history))
+      })
+    } else if (this.state.form.type === 'investor') {
+      fetch(URL, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(this.state.form)
+      }).then(json => {
+        this.setState({
+          signingUp: false
+        }, () => this.submitForm(history))
+      })
     }
+
   }
 
   handleChange = (event) => {

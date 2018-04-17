@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Icon, Input, Button, Select } from 'antd';
+import { Form, Icon, Input, Button, Select, InputNumber } from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -16,6 +16,9 @@ const Login = (props) => {
       <div>
         <FormItem>
           <Input name="passwordConfirmation" onChange={props.handleChange} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm Password" value={props.form.passwordConfirmation} />
+        </FormItem>
+        <FormItem>
+          <Input name="name" onChange={props.handleChange} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Full name" value={props.form.name} />
         </FormItem>
         <FormItem>
           <Input name="mission" onChange={props.handleChange} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}  placeholder="Enter your mission" value={props.form.mission} />
