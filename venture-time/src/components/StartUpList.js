@@ -5,7 +5,7 @@ import Filter from "./Filter.js"
 import DropDown from "./DropDown.js"
 
 
-const { Header, Content, Sider, Footer } = Layout
+const { Header } = Layout
 const URL = 'http://localhost:3000/api/v1/start_ups'
 
 

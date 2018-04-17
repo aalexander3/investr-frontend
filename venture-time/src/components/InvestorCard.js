@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Avatar, Icon, List, Divider} from 'antd';
-const { Header, Content, Sider } = Layout
+const { Content, Sider } = Layout
 
 const URL = 'http://localhost:3000/api/v1/start_up_investors'
 
@@ -42,7 +42,7 @@ class InvestorCard extends React.Component {
         <Layout hasSider={true}>
         <Content>
           <div className="card-banner">
-              <img className="cover-photo" src='http://s3.amazonaws.com/s3.timetoast.com/public/uploads/photos/6327469/blurry-blue-background-ii_facebook_timeline_cover.jpg?1477360789' />
+              <img className="cover-photo" alt="cover" src='http://s3.amazonaws.com/s3.timetoast.com/public/uploads/photos/6327469/blurry-blue-background-ii_facebook_timeline_cover.jpg?1477360789' />
               {(this.props.attributes) ? <img id="card-avatar" src={this.props.attributes.logo} alt="company logo" /> : null}
               <h1>{this.props.attributes.name}</h1>
               <strong>{this.props.attributes.interests}</strong><br/>

@@ -1,4 +1,5 @@
 import React from 'react'
+import withAuth from '../HOC/withAuth'
 
 import StartUpList from "./StartUpList.js"
 
@@ -11,6 +12,4 @@ const MatchPage = (props) => {
   )
 }
 
-
-
-export default MatchPage
+export default withAuth(MatchPage)

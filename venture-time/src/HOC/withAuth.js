@@ -3,12 +3,10 @@ import {Redirect} from 'react-router'
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
-    return props.auth.loggingIn || props.auth.loggedIn ?
-      //don't do WrappedComponent(props) because only functional
-      // components will work
+    return props.loggedIn ?
       <WrappedComponent { ...props } />
       :
-      (<Redirect to="/login" />)
+      (<Redirect to="/login" errors="You must be logged in to access that page!"/>)
   }
 }
 

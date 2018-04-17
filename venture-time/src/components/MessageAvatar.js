@@ -1,8 +1,7 @@
 import React from "react"
-import { Layout, Avatar, Popover } from 'antd';
+import { Avatar, Popover } from 'antd';
 
 const MessageAvatar = props => {
-  console.log(props);
   const handleClick = event => {
     props.startNewMessage(props.conversation)
   }

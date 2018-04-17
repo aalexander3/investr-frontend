@@ -1,7 +1,7 @@
 import React from 'react'
 import InvestorList from './InvestorList'
+import withAuth from '../HOC/withAuth'
 
-// import { Form, Icon } from 'antd';
 
 class SettingsPage extends React.Component {
 
@@ -14,6 +14,4 @@ class SettingsPage extends React.Component {
   }
 }
 
-
-
-export default SettingsPage
+export default withAuth(SettingsPage)

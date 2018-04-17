@@ -2,12 +2,24 @@ import React from "react"
 import { Col, Divider, Icon, Button, Alert } from 'antd'
 // import LikeStamp from '../../public/like-stamp.jpg'
 
+const URL = 'http://localhost:3000/api/v1/start_up_investors'
+
+
 class StartUpCard extends React.Component {
   state = {
     details: false,
     disliked: false,
     errors: null,
-    liked: false
+    liked: false,
+    conversations: []
+  }
+
+  componentDidMount = () => {
+    fetch(URL).then(res => res.json()).then(json => {
+      this.setState({
+        conversations: json.data
+      }, () => console.log(this.state.conversations))
+    })
   }
 
   handleClick = () => {
@@ -30,14 +42,21 @@ class StartUpCard extends React.Component {
       liked: true
     })
     const data = {username: this.props.username, start_up_id: this.props.startUp.id}
-    fetch("http://localhost:3000/api/v1/start_up_investors", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Accepts" : "application/json",
-        'Content-type': "application/json"
-      }
+
+    let found = this.state.conversations.find(convo => {
+      return convo.attributes.investor.username === data.username && convo.attributes['start-up'].id === parseInt(data.start_up_id)
     })
+    // IF not found send post request --------
+    if (!found) {
+      fetch(URL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Accepts" : "application/json",
+          'Content-type': "application/json"
+        }
+      })
+    }
   }
 
   handleDisLikes = () => {
@@ -49,7 +68,7 @@ class StartUpCard extends React.Component {
   makeButtonsAppear = () => {
     return (
       <div>
-        {this.state.liked ? <img className='like-stamp' src={process.env.PUBLIC_URL + '/like-stamp.png'} /> : <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
+        {this.state.liked ? <img className='like-stamp' alt="like stamp" src={process.env.PUBLIC_URL + '/like-stamp.png'} /> : <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
         <Button type="default" icon="dislike" size='small' className='login-buttons' onClick={this.handleDisLikes}>NO THANKS</Button>
       </div>
     )
@@ -63,7 +82,7 @@ class StartUpCard extends React.Component {
               {(this.state.errors) ? <Alert message={this.state.errors} type="error" /> : null }
 
               <div className='card-floater'>
-                <img src={this.props.startUp.attributes.logo} className='card-logo' align="middle" />
+                <img src={this.props.startUp.attributes.logo} alt="card logo" className='card-logo' align="middle" />
                 <br/>
                 {this.props.currentUser.type === 'investors' ? this.makeButtonsAppear() : <strong>Investor</strong>}
                 <Divider/>

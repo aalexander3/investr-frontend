@@ -3,7 +3,6 @@ import { Input } from 'antd'
 
 const Search = Input.Search;
 
-
 const Filter = props => {
   return(
     <div className='filter-search'>

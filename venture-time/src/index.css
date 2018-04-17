@@ -3,10 +3,23 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+#login-background {
+  height: 38rem;
+  background-image: url('https://images.unsplash.com/photo-1500316124030-4cffa46f10f0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7c3583c9e0a39944ac510280a55bcc0b&auto=format&fit=crop&w=750&q=80');
+  background-size: cover;
+}
+
+#investr-logo {
+  width: 15%;
+  left: 42%;
+  position: absolute;
+  top: -1%;
+}
+
 .container {
   width: 20%;
-
-  margin: 10% 0% 0 0%;
+  margin: 5% 0% 0 0%;
   left: 39%;
   position: absolute;
 }
@@ -128,8 +141,49 @@ img.card-logo {
   display: inline;
 }
 
+.my-message {
+  float: right;
+  display: inline-block;
+  line-height: normal;
+  margin-left: 34rem;
+}
+
+.other-message {
+  float: left;
+  display: inline-block;
+  width: 100%;
+  margin-right: 34rem;
+}
+.ant-card.my-card {
+  background-color: #5799C3;
+  border: none;
+  border-radius: 26%;
+  width: 100%;
+ }
+
+.ant-card.other-card {
+  background-color: #B7F0ED;
+  border: none;
+  border-radius: 26%;
+  width: 100%;
+ }
+
+#convo-banner{
+  text-align: center;
+  width: 30%;
+  top: 19.5%;
+  left: 36%;
+  position: absolute;
+  z-index: 10;
+  padding: 2%;
+  color: white;
+  background-color: #5799C3;
+  border-radius: 50%;
+}
+
+
 #message-box{
-  height: 23rem;
+  height: 19rem;
   overflow: scroll;
   margin-bottom: 2%;
   line-height: 1rem;

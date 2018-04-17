@@ -5,6 +5,7 @@ import { ActionCable } from 'react-actioncable-provider';
 // import { API_ROOT } from '../constants';
 import Cable from './Cable';
 import MessageWindow from './MessageWindow'
+import withAuth from '../HOC/withAuth'
 
 const { Header } = Layout
 const URL = 'http://localhost:3000/api/v1/start_up_investors'
@@ -19,8 +20,6 @@ class MessagePage extends React.Component {
 
   componentDidMount = () => {
     fetch(URL).then(res => res.json()).then(json => {
-
-
       const filteredList = json.data.filter(connection => {
         return (this.props.currentUser.type === 'investors') ? connection.attributes.investor.username === this.props.username : connection.attributes['start-up'].username === this.props.username
       })
@@ -53,7 +52,6 @@ class MessagePage extends React.Component {
   }
 
   renderStartups = () => {
-    console.log(this.state.conversations);
     return this.state.conversations.map(conversation => {
     return (<MessageAvatar type={this.props.currentUser.type} conversation={conversation} startNewMessage={this.startNewMessage}/>)
       })
@@ -112,10 +110,10 @@ class MessagePage extends React.Component {
             handleReceivedMessage={this.handleReceivedMessage}
           />
         ) : null}
-        {this.state.currentConvo ? <MessageWindow goToBottom={this.goToBottom} filteredMessages={this.filterMessages} username ={this.props.username} conversation={this.state.currentConvo} conversations={this.state.conversations} /> : null}
+        {this.state.currentConvo ? <MessageWindow type={this.props.currentUser.type} goToBottom={this.goToBottom} filteredMessages={this.filterMessages} username ={this.props.username} conversation={this.state.currentConvo} conversations={this.state.conversations} /> : null}
       </div>
     )
   }
 }
 
-export default MessagePage
+export default withAuth(MessagePage)
