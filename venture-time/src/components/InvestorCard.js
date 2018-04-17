@@ -7,7 +7,7 @@ const URL = 'http://localhost:3000/api/v1/start_up_investors'
 class InvestorCard extends React.Component {
 
   state = {
-    startUps: []
+    connections: []
   }
 
   onPanelChange(value, mode) {
@@ -16,19 +16,27 @@ class InvestorCard extends React.Component {
 
   componentDidMount = () => {
     fetch(URL).then(res => res.json()).then(json => {
-      const filteredList = json.data.filter(startUp => startUp.attributes.investor.username === this.props.attributes.username)
-      const newFilter = filteredList.map(startUp => {
-        return {name: startUp.attributes['start-up'].name, logo: startUp.attributes['start-up'].logo, url: startUp.attributes['start-up'].url}
-      })
-
-      this.setState({
-        startUps: newFilter
-      }, () => console.log(this.state.startUps))
+      if (this.props.investor.type === "investors") {
+        const filteredList = json.data.filter(connection => connection.attributes.investor.username === this.props.attributes.username)
+        const newFilter = filteredList.map(connection => {
+          return {name: connection.attributes['start-up'].name, logo: connection.attributes['start-up'].logo, url: connection.attributes['start-up'].url}
+        })
+        this.setState({
+          connections: newFilter
+        })
+      }else {
+        const filteredList = json.data.filter(connection => connection.attributes["start-up"].username === this.props.attributes.username)
+        const newFilter = filteredList.map(connection => {
+          return {name: connection.attributes.investor.name, logo: connection.attributes.investor.logo, url: connection.attributes.investor.url}
+        })
+        this.setState({
+          connections: newFilter
+        })
+      }
     })
   }
 
   render(){
-    console.log(this.props);
     return(
       <div>
         <Layout hasSider={true}>
@@ -38,7 +46,7 @@ class InvestorCard extends React.Component {
               {(this.props.attributes) ? <img id="card-avatar" src={this.props.attributes.logo} alt="company logo" /> : null}
               <h1>{this.props.attributes.name}</h1>
               <strong>{this.props.attributes.interests}</strong><br/>
-              <strong> New York, NY </strong> || <span>   {this.state.startUps.length} <Icon type="team" /></span>
+              <strong> New York, NY </strong> || <span>   {this.state.connections.length} <Icon type="team" /></span>
               <p>{this.props.attributes.mission}</p>
               <Divider />
               <p> {this.props.attributes.description} </p>
@@ -51,7 +59,7 @@ class InvestorCard extends React.Component {
             <h3>My Connections</h3>
             <List
               itemLayout="horizontal"
-              dataSource={this.state.startUps}
+              dataSource={this.state.connections}
               renderItem={item => (
                 <List.Item>
                 <List.Item.Meta

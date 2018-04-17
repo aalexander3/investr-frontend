@@ -7,7 +7,7 @@ const Search = Input.Search;
 const Filter = props => {
   return(
     <div className='filter-search'>
-      <Search onChange={props.onChange} placeholder='Search by company name' />
+      <Search onChange={props.onChange} placeholder='Search by name' />
     </div>
   )
 }

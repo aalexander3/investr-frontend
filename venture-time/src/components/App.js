@@ -10,23 +10,29 @@ import MatchPage from './MatchPage'
 import MessagePage from './MessagePage'
 
 const URL = "http://localhost:3000/api/v1/investors"
+const startUpURL = "http://localhost:3000/api/v1/start_ups"
+
 
 class App extends Component {
   state = {
     form: {
       loggedIn: false,
-      username: 'arren',
+      username: '',
       password: ''
     },
-    investors: []
+    investors: [],
+    startUps: [],
+    currentUser: null
   }
 
   submitForm = (history) => {
+
     this.setState({
       form: {
         ...this.state.form,
         loggedIn: true
-      }
+      },
+      currentUser: this.findUser()
     }, () => {
       history.push("/settings")
     })
@@ -47,13 +53,33 @@ class App extends Component {
         loggedIn: false,
         username: '',
         password: ''
-      }
+      },
+      currentUser: null
     })
   }
 
   componentDidMount() {
     console.log('app mounted');
     this.fetchUser()
+    this.fetchStartUp()
+  }
+
+  fetchStartUp = () => {
+    fetch(startUpURL)
+      .then(resp => resp.json())
+      .then(startUps => this.setState({ startUps: startUps.data }))
+  }
+
+  filterStartUp = () => {
+    return this.state.startUps.filter(startUp => {
+      return startUp.attributes.username === this.state.form.username
+    })[0]
+  }
+
+  findUser = () => {
+    let user = this.filterStartUp()
+    user ? null : user = this.filterUser()
+    return user
   }
 
   fetchUser = () => {
@@ -76,6 +102,9 @@ class App extends Component {
           return <MatchPage
             username={this.state.form.username}
             password={this.state.form.password}
+            startUps={this.state.startUps}
+            investors={this.state.investors}
+            currentUser={this.state.currentUser}
           />
           }} />
         <Route exact path='/login' render={ (renderProps) => {
@@ -87,14 +116,14 @@ class App extends Component {
           }} />
         <Route exact path='/settings' render={ (renderProps) => {
           return <SettingsPage
-            filterUser={this.filterUser}
+            filterUser={this.findUser}
             investors={this.state.investors}
             username={this.state.form.username}
             password={this.state.form.password}/>
           }} />
           <Route exact path='/messages' render={ (renderProps) => {
             return <MessagePage
-              filterUser={this.filterUser}
+              filterUser={this.findUser}
               investors={this.state.investors}
               username={this.state.form.username}
               password={this.state.form.password} />

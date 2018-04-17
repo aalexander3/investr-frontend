@@ -13,13 +13,18 @@ class StartUpList extends React.Component {
 
   state = {
     startUps: [],
+    investors: [],
     value: "",
     filteredStartUps: [],
     dropDownVal: ""
   }
 
   componentDidMount(){
-    this.fetchStartUps()
+    // this.fetchStartUps()
+    this.setState({
+      startUps: this.props.startUps,
+      investors: this.props.investors
+    })
   }
 
   fetchStartUps = () => {
@@ -29,7 +34,11 @@ class StartUpList extends React.Component {
   }
 
   makeStartUpCards = (start, end) => {
-    return this.state.startUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} />)
+    if (this.props.currentUser.type === "start-ups") {
+      return this.state.investors.slice(start, end).map((investor) =>  <StartUpCard key={investor.id} startUp={investor} username={this.props.username} />)
+    } else {
+      return this.state.startUps.slice(start, end).map((startUp) =>  <StartUpCard key={startUp.id} startUp={startUp} username={this.props.username} />)
+    }
   }
 
   makeFilteredStartUpCards = (start, end) => {
@@ -40,9 +49,15 @@ class StartUpList extends React.Component {
     this.setState({
       value: event.target.value
     }, () => {
-      this.setState({
-        filteredStartUps: this.state.startUps.filter((startUp) => {return startUp.attributes.name.toLowerCase().includes(this.state.value)})
-      })
+      if (this.props.currentUser.type === "investors") {
+        this.setState({
+          filteredStartUps: this.state.startUps.filter((startUp) => {return startUp.attributes.name.toLowerCase().includes(this.state.value)})
+        })
+      } else {
+          this.setState({
+            filteredStartUps: this.state.investors.filter((investor) => {return investor.attributes.name.toLowerCase().includes(this.state.value)})
+          })
+        }
     })
   }
 
@@ -60,7 +75,7 @@ class StartUpList extends React.Component {
           <h1>Your startups favorite startups</h1>
         </Header>
         <Filter onChange={this.onChange}/>
-        <DropDown onChange={this.onDropDownChange}/>
+        {this.props.currentUser.type === 'investors'? <DropDown onChange={this.onDropDownChange}/> : null}
         <Divider />
           {this.state.filteredStartUps.length > 0 ? <div className='start-up-container'>{this.makeFilteredStartUpCards()}</div> : <div className='start-up-container'>{this.makeStartUpCards()}</div>}
       </div>
