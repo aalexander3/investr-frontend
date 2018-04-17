@@ -10,6 +10,7 @@ class DropDown extends React.Component {
       <div className='filter-search'>
         <Select defaultValue='all' onChange={this.props.onChange}>
           <Option value="all"  >All Fields</Option>
+          <Option value="E-Commerce"  >E-Commerce</Option>
           <Option value="Technology"  >Technology</Option>
           <Option value="Food"  >Food</Option>
           <Option value="Finance"  >Finance</Option>

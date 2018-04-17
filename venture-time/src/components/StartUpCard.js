@@ -5,7 +5,8 @@ class StartUpCard extends React.Component {
   state = {
     details: false,
     disliked: false,
-    errors: null
+    errors: null,
+    liked: false
   }
 
   handleClick = () => {
@@ -24,6 +25,9 @@ class StartUpCard extends React.Component {
   }
 
   handleLikes = () => {
+    this.setState({
+      liked: true
+    })
     const data = {username: this.props.username, start_up_id: this.props.startUp.id}
     fetch("http://localhost:3000/api/v1/start_up_investors", {
       method: "POST",
@@ -52,7 +56,7 @@ class StartUpCard extends React.Component {
               <div className='card-floater'>
                 <img src={this.props.startUp.attributes.logo} className='card-logo' align="middle" />
                 <br/>
-                <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>
+                {this.state.liked ? null : <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
                 <Button type="default" icon="dislike" size='small' className='login-buttons' onClick={this.handleDisLikes}>NO THANKS</Button>
                 <Divider/>
               </div>
