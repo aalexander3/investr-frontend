@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Route} from 'react-router-dom'
+import {HEADERS} from '../constants/index'
 
 import '../App.css';
 // Components
@@ -20,7 +21,7 @@ class App extends Component {
       signingUp: false,
       username: '',
       password: '',
-      passwordConfirmation: '',
+      password_confirmation: '',
       name: '',
       misison: '',
       description: '',
@@ -54,8 +55,10 @@ class App extends Component {
 
   submitForm = (history) => {
   if (this.state.form.signingUp) {
+    console.log('signing up');
     this.register(history)
   } else if (this.state.form.username !== '') {
+    console.log('logging in');
     this.setState({
       form: {
         ...this.state.form,
@@ -68,35 +71,35 @@ class App extends Component {
   }
 
   register = (history) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        signingUp: false
+      }
+    })
     if (this.state.form.type === 'startup') {
+      this.setState({
+        startUps: [...this.state.startUps, this.state.form]
+      })
       fetch(startUpURL, {
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-type': 'application/json'
-        },
+        headers: HEADERS,
         body: JSON.stringify(this.state.form)
       }).then(json => {
-        console.log(json)
-        this.setState({
-          signingUp: false
-        }, () => this.submitForm(history))
+        this.submitForm(history)
       })
     } else if (this.state.form.type === 'investor') {
+      this.setState({
+        investors: [...this.state.investors, this.state.form]
+      })
       fetch(URL, {
         method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-type': 'application/json'
-        },
+        headers: HEADERS,
         body: JSON.stringify(this.state.form)
       }).then(json => {
-        this.setState({
-          signingUp: false
-        }, () => this.submitForm(history))
+        this.submitForm(history)
       })
     }
-
   }
 
   handleChange = (event) => {
@@ -114,7 +117,7 @@ class App extends Component {
         ...this.state.form,
         type: event
       }
-    }, () => console.log(this.state.form.type))
+    })
   }
 
   logout = (event) => {
@@ -137,7 +140,6 @@ class App extends Component {
   }
 
   signUpClick = (e) => {
-    console.log('sign up clicked');
     this.setState({
       form: {
         ...this.state.form,

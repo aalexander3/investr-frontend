@@ -15,7 +15,7 @@ const Login = (props) => {
     return(
       <div>
         <FormItem>
-          <Input name="passwordConfirmation" onChange={props.handleChange} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm Password" value={props.form.passwordConfirmation} />
+          <Input name="password_confirmation" onChange={props.handleChange} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm Password" value={props.form.password_confirmation} />
         </FormItem>
         <FormItem>
           <Input name="name" onChange={props.handleChange} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Full name" value={props.form.name} />
