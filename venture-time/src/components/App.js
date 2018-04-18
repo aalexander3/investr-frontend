@@ -23,7 +23,7 @@ class App extends Component {
       password: '',
       password_confirmation: '',
       name: '',
-      misison: '',
+      mission: '',
       description: '',
       interests: '',
       url: '',
