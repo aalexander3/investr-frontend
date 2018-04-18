@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {Route} from 'react-router-dom'
-import {HEADERS} from '../constants/index'
-
 import '../App.css';
 // Components
 import NavBar from './NavBar'
@@ -12,7 +10,10 @@ import MessagePage from './MessagePage'
 
 const URL = "http://localhost:3000/api/v1/investors"
 const startUpURL = "http://localhost:3000/api/v1/start_ups"
-
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'Accepts': 'application/json'
+}
 
 class App extends Component {
   state = {
@@ -69,19 +70,10 @@ class App extends Component {
   }
 
   register = (history) => {
-    this.setState({
-
-    })
     if (this.state.form.type === 'startup') {
-      this.setState({
-        startUps: [...this.state.startUps, this.state.form]
-      })
       fetch(startUpURL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accepts': 'application/json'
-        },
+        headers: HEADERS,
         body: JSON.stringify(this.state.form)
       }).then(res => res.json()).then(json => {
         this.setState({
@@ -94,15 +86,9 @@ class App extends Component {
       })
 
     } else if (this.state.form.type === 'investor') {
-      this.setState({
-        investors: [...this.state.investors, this.state.form]
-      })
       fetch(URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accepts': 'application/json'
-        },
+        headers: HEADERS,
         body: JSON.stringify(this.state.form)
       }).then(res => res.json()).then(json => {
         this.setState({
@@ -188,7 +174,6 @@ class App extends Component {
           return <MatchPage
             loggedIn={this.state.form.loggedIn}
             username={this.state.form.username}
-            password={this.state.form.password}
             startUps={this.state.startUps}
             investors={this.state.investors}
             currentUser={this.state.currentUser}
@@ -200,7 +185,7 @@ class App extends Component {
             onDropDownChange={this.onDropDownChange}
             signUpClick={this.signUpClick}
             form={this.state.form}
-            history={ renderProps.history }
+            history={ renderProps.history}
             register={this.register}
             handleChange={this.handleChange}/>
           }} />
@@ -208,9 +193,8 @@ class App extends Component {
           return <SettingsPage
             loggedIn={this.state.form.loggedIn}
             filterUser={this.findUser}
-            investors={this.state.investors}
-            username={this.state.form.username}
-            password={this.state.form.password}/>
+            // investors={this.state.investors}
+            username={this.state.form.username}/>
           }} />
           <Route exact path='/messages' render={ (renderProps) => {
             return <MessagePage
@@ -218,8 +202,7 @@ class App extends Component {
               currentUser={this.state.currentUser}
               filterUser={this.findUser}
               investors={this.state.investors}
-              username={this.state.form.username}
-              password={this.state.form.password} />
+              username={this.state.form.username} />
             }} />
       </div>
     );

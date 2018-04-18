@@ -9,15 +9,15 @@ const MessageAvatar = props => {
   const renderAvatars = () => {
     if (props.type === 'investors') {
       return (
-            <Popover content={props.conversation.attributes["start-up"].name}>
-              <Avatar src={props.conversation.attributes["start-up"].logo}/>
-            </Popover>
+        <Popover content={props.conversation.attributes["start-up"].name}>
+          <Avatar src={props.conversation.attributes["start-up"].logo}/>
+        </Popover>
       )
     } else {
       return (
-            <Popover content={props.conversation.attributes.investor.name}>
-              <Avatar src={props.conversation.attributes.investor.logo}/>
-            </Popover>
+        <Popover content={props.conversation.attributes.investor.name}>
+          <Avatar src={props.conversation.attributes.investor.logo}/>
+        </Popover>
       )
     }
   }

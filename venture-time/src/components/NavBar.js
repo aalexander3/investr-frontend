@@ -15,7 +15,7 @@ return(
         <Link to='/'><Icon type="rocket" /> Match Maker </Link>
       </Menu.Item>
       <span>
-        <img id='investr-logo' src={process.env.PUBLIC_URL + '/investr_logo.png'} />
+        <img id='investr-logo' src={process.env.PUBLIC_URL + '/investr_logo.png'} alt='company-logo'/>
       </span>
       <Menu.Item key="message" style={{"float":"right"}}>
         <Link to='/messages'><Icon type="coffee" />Messages</Link>

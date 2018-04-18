@@ -20,18 +20,17 @@ class StartUpList extends React.Component {
   }
 
   componentDidMount(){
-    // this.fetchStartUps()
     this.setState({
       startUps: this.props.startUps,
       investors: this.props.investors
     })
   }
 
-  fetchStartUps = () => {
-    fetch(URL)
-      .then(rep => rep.json())
-      .then(startUps => this.setState({ startUps: startUps.data }))
-  }
+  // fetchStartUps = () => {
+  //   fetch(URL)
+  //     .then(rep => rep.json())
+  //     .then(startUps => this.setState({ startUps: startUps.data }))
+  // }
 
   makeStartUpCards = (start, end) => {
     if (this.props.currentUser.type === "start-ups") {

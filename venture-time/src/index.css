@@ -64,9 +64,8 @@ body {
   max-width: 240px;
   min-width: 200px;
   width: 240px;
-  height: 39rem;
+  height: -webkit-fill-available;
 }
-
 
 #row-wrapper {
   margin: 4% 10% 0 10%;
@@ -132,17 +131,21 @@ img.card-logo {
 
 #message-window {
   margin: 4%;
-  border: solid #3B627E;
+  background: #EDEDEF;
+  border-left: #3B627E solid 1.5rem;
   padding: 2%;
+  border-radius: 15px;
 }
 
-#new-message-form{
-  width: 60%;
+#new-message-form {
+  text-align: right;
+  width: 80%;
   display: inline;
 }
 
 .my-message {
   float: right;
+  text-align: right;
   display: inline-block;
   line-height: normal;
   margin-left: 34rem;
@@ -150,21 +153,23 @@ img.card-logo {
 
 .other-message {
   float: left;
+  text-align: left;
   display: inline-block;
   width: 100%;
   margin-right: 34rem;
 }
+
 .ant-card.my-card {
   background-color: #5799C3;
   border: none;
-  border-radius: 26%;
+  border-radius: 20px;
   width: 100%;
  }
 
 .ant-card.other-card {
   background-color: #B7F0ED;
   border: none;
-  border-radius: 26%;
+  border-radius: 20px;
   width: 100%;
  }
 
@@ -178,9 +183,8 @@ img.card-logo {
   padding: 2%;
   color: white;
   background-color: #5799C3;
-  border-radius: 50%;
+  border-radius: 10%;
 }
-
 
 #message-box{
   height: 28rem;

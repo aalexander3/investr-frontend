@@ -1,6 +1,7 @@
 import React from 'react'
 import {Input, Button, Divider, Layout, Avatar, Card} from 'antd'
 
+const Search = Input.Search
 const { Meta } = Card;
 const {Header} = Layout
 const URL = 'http://localhost:3000/api/v1/messages'
@@ -81,8 +82,7 @@ class MessageWindow extends React.Component {
         {this.makeMessages()}
       </div>
       <div id='new-message-form'>
-        <Input style={{width: '60%'}} placeholder="enter your message" size="large" value={this.state.formValue} onChange={this.changing}></Input>
-        <Button type="primary" onClick={this.sendTheMessage}>Send</Button>
+        <Search style={{width: '60%'}} placeholder="enter your message" enterButton="Send" size="large" value={this.state.formValue} onChange={this.changing} onSearch={this.sendTheMessage}></Search>
       </div>
     </div>)
   }

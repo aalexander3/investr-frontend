@@ -44,11 +44,13 @@ class MessagePage extends React.Component {
   }
 
   startNewMessage = conversation => {
-    this.setState({
-      currentConvo: conversation
-    }, () => {
-      this.goToBottom()
-    })
+     (this.state.currentConvo === conversation) ?
+     this.setState({
+       currentConvo: null
+     })
+     : this.setState({
+       currentConvo: conversation
+     }, () => {this.goToBottom()})
   }
 
   renderStartups = () => {
