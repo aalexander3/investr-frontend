@@ -55,10 +55,8 @@ class App extends Component {
 
   submitForm = (history) => {
   if (this.state.form.signingUp) {
-    console.log('signing up');
     this.register(history)
   } else if (this.state.form.username !== '') {
-    console.log('logging in');
     this.setState({
       form: {
         ...this.state.form,
@@ -72,10 +70,7 @@ class App extends Component {
 
   register = (history) => {
     this.setState({
-      form: {
-        ...this.state.form,
-        signingUp: false
-      }
+
     })
     if (this.state.form.type === 'startup') {
       this.setState({
@@ -83,21 +78,40 @@ class App extends Component {
       })
       fetch(startUpURL, {
         method: 'POST',
-        headers: HEADERS,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accepts': 'application/json'
+        },
         body: JSON.stringify(this.state.form)
-      }).then(json => {
-        this.submitForm(history)
+      }).then(res => res.json()).then(json => {
+        this.setState({
+          startUps: json.data,
+          form: {
+            ...this.state.form,
+            signingUp: false
+          }
+        }, () => this.submitForm(history))
       })
+
     } else if (this.state.form.type === 'investor') {
       this.setState({
         investors: [...this.state.investors, this.state.form]
       })
       fetch(URL, {
         method: 'POST',
-        headers: HEADERS,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accepts': 'application/json'
+        },
         body: JSON.stringify(this.state.form)
-      }).then(json => {
-        this.submitForm(history)
+      }).then(res => res.json()).then(json => {
+        this.setState({
+          investors: json.data,
+          form: {
+            ...this.state.form,
+            signingUp: false
+          }
+        }, () => this.submitForm(history))
       })
     }
   }
