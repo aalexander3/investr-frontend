@@ -99,6 +99,12 @@ div.ant-col-8.start-up-card {
   padding: 2%;
 }
 
+.start-up-container {
+  height: 61vh;
+  overflow: scroll;
+  padding: 1rem;
+}
+
 .start-up-card {
   height: 24rem;
   background: #EDEDEF;
@@ -150,6 +156,7 @@ img.card-logo {
 .message-avatar {
   display: inline;
   margin-right: 1em;
+  cursor: pointer;
 }
 
 .like-stamp {
@@ -185,40 +192,53 @@ img.card-logo {
   display: inline;
 }
 
-.my-message {
-  float: right;
-  text-align: right;
+.message {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  line-height: normal;
-  margin-left: 34rem;
   margin-bottom: .2rem;
+  line-height: normal;
+  max-width: 400px;
+}
+
+.card:hover{
+
+}
+
+.my.message {
+  float: right;
+  text-align: right;
+  margin-left: 34rem;
   grid-column: 2;
   grid-row: 1;
 }
 
-.other-message {
+.other.message {
   float: left;
   text-align: left;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
   margin-right: 34rem;
-  margin-bottom: .2rem;
   grid-column: 1;
   grid-row: 1;
 }
 
-.ant-card.my-card {
+.card {
+  transition: all .3s linear;
+}
+
+.card:hover{
+  transform: scale3d(1.008, 1.008, 1);
+  box-shadow: 0 8px 18px 0 rgba(0, 0, 0, .3), 0 6px 20px 0 rgba(0, 0, 0, .15);
+  z-index: 20;
+}
+
+.ant-card.my.card {
   background-color: #5799C3;
   border: none;
   border-radius: 20px;
   width: 100%;
  }
 
-.ant-card.other-card {
+.ant-card.other.card {
   background-color: #B7F0ED;
   border: none;
   border-radius: 20px;

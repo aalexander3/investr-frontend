@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout} from 'antd';
+import { Layout } from 'antd';
 import MessageAvatar from "./MessageAvatar.js"
 import { ActionCable } from 'react-actioncable-provider';
 // import { API_ROOT } from '../constants';
@@ -45,18 +45,14 @@ class MessagePage extends React.Component {
 
   startNewMessage = conversation => {
      (this.state.currentConvo === conversation) ?
-     this.setState({
-       currentConvo: null
-     })
-     : this.setState({
-       currentConvo: conversation
-     }, () => {this.goToBottom()})
+      this.setState({ currentConvo: null }) :
+      this.setState({ currentConvo: conversation}, this.goToBottom )
   }
 
   renderStartups = () => {
-    return this.state.conversations.map(conversation => {
-    return (<MessageAvatar type={this.props.currentUser.type} conversation={conversation} startNewMessage={this.startNewMessage}/>)
-      })
+    return this.state.conversations.map(conversation => <MessageAvatar type={this.props.currentUser.type}
+        conversation={conversation}
+        startNewMessage={this.startNewMessage}/>)
   }
 
   handleReceivedConversation = response => {
@@ -69,9 +65,7 @@ class MessagePage extends React.Component {
   handleReceivedMessage = response => {
     const { message } = response;
     const conversations = [...this.state.conversations];
-    const conversation = conversations.find(conv => {
-      return message.start_up_investor_id === conv.id
-      });
+    const conversation = conversations.find(conv => message.start_up_investor_id === parseInt(conv.id,10))
     conversation.attributes.messages = [...conversation.attributes.messages, message];
     this.setState({
       conversations: conversations,
@@ -93,26 +87,19 @@ class MessagePage extends React.Component {
     }
   }
 
-  getMessages() {
-    fetch(URL)
-      .then(resp => resp.json())
-  }
-
   render() {
     return(
       <div>
         <Header style={{background:"#3B627E"}}>{this.renderStartups()}</Header>
-        <ActionCable
-          channel={{ channel: 'StartUpInvestorsChannel' }}
-          onReceived={this.handleReceivedConversation}
-        />
-        {this.state.conversations.length ? (
-          <Cable
-            conversations={this.state.conversations}
-            handleReceivedMessage={this.handleReceivedMessage}
-          />
-        ) : null}
-        {this.state.currentConvo ? <MessageWindow type={this.props.currentUser.type} goToBottom={this.goToBottom} filteredMessages={this.filterMessages} username ={this.props.username} conversation={this.state.currentConvo} conversations={this.state.conversations} /> : null}
+        <ActionCable channel={{ channel: 'StartUpInvestorsChannel' }} onReceived={this.handleReceivedConversation} />
+        <Cable conversations={this.state.conversations} handleReceivedMessage={this.handleReceivedMessage} />
+        {this.state.currentConvo && <MessageWindow
+            type={this.props.currentUser.type}
+            goToBottom={this.goToBottom}
+            filteredMessages={this.filterMessages()}
+            username ={this.props.username}
+            conversation={this.state.currentConvo}
+            conversations={this.state.conversations} /> }
       </div>
     )
   }

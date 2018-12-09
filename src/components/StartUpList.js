@@ -20,6 +20,7 @@ class StartUpList extends React.Component {
   }
 
   componentDidMount(){
+    // why do this?????
     this.setState({
       startUps: this.props.startUps,
       investors: this.props.investors

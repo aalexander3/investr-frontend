@@ -59,15 +59,19 @@ class App extends Component {
     if (this.state.form.signingUp) {
       this.register(history)
     } else if (this.state.form.username !== '') {
-      this.setState({
-        form: {
-          ...this.state.form,
-          loggedIn: true
-        },
-        currentUser: this.findUser()
-      }, () => {
-        history.push("/settings")
-      })}
+      let user = this.findUser()
+      if (user) {
+        this.setState({
+          ...this.state,
+          form: {
+            ...this.state.form,
+            loggedIn: true
+          },
+          currentUser: user
+        }, () => {
+          history.push("/settings")
+        })}
+      }
   }
 
   register = (history) => {
@@ -150,9 +154,8 @@ class App extends Component {
   }
 
   filterStartUp = () => {
-    return this.state.startUps.filter(startUp => {
-      return startUp.attributes.username === this.state.form.username
-    })[0]
+    // make better with auth
+    return this.state.startUps.find(startUp => startUp.attributes.username === this.state.form.username)
   }
 
   findUser = () => {
@@ -162,9 +165,7 @@ class App extends Component {
   }
 
   filterUser = () => {
-    return this.state.investors.filter(investor => {
-      return investor.attributes.username === this.state.form.username
-    })[0]
+    return this.state.investors.find(investor => investor.attributes.username === this.state.form.username)
   }
 
   render() {
