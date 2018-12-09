@@ -7,6 +7,7 @@ import Login from './Login'
 import SettingsPage from './SettingsPage'
 import MatchPage from './MatchPage'
 import MessagePage from './MessagePage'
+import { StartUpsAdapter, InvestorsAdapter } from '../adapters/Adapter.js'
 
 const URL = "http://localhost:3000/api/v1/investors"
 const startUpURL = "http://localhost:3000/api/v1/start_ups"
@@ -14,6 +15,8 @@ const HEADERS = {
   'Content-Type': 'application/json',
   'Accepts': 'application/json'
 }
+
+
 
 class App extends Component {
   state = {
@@ -38,35 +41,33 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.fetchUser()
+    this.fetchInvestors()
     this.fetchStartUp()
   }
 
   fetchStartUp = () => {
-    fetch(startUpURL)
-      .then(resp => resp.json())
+    StartUpsAdapter.index()
       .then(startUps => this.setState({ startUps: startUps.data }))
   }
 
-  fetchUser = () => {
-    fetch(URL)
-      .then(resp => resp.json())
-      .then(investors => this.setState({investors: investors.data }))
+  fetchInvestors = () => {
+    InvestorsAdapter.index()
+      .then(investors => this.setState({ investors: investors.data }))
   }
 
   submitForm = (history) => {
-  if (this.state.form.signingUp) {
-    this.register(history)
-  } else if (this.state.form.username !== '') {
-    this.setState({
-      form: {
-        ...this.state.form,
-        loggedIn: true
-      },
-      currentUser: this.findUser()
-    }, () => {
-      history.push("/settings")
-    })}
+    if (this.state.form.signingUp) {
+      this.register(history)
+    } else if (this.state.form.username !== '') {
+      this.setState({
+        form: {
+          ...this.state.form,
+          loggedIn: true
+        },
+        currentUser: this.findUser()
+      }, () => {
+        history.push("/settings")
+      })}
   }
 
   register = (history) => {
@@ -156,7 +157,7 @@ class App extends Component {
 
   findUser = () => {
     let user = this.filterStartUp()
-    user ? null : user = this.filterUser()
+    if (!user) user = this.filterUser()
     return user
   }
 

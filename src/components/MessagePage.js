@@ -70,7 +70,7 @@ class MessagePage extends React.Component {
     const { message } = response;
     const conversations = [...this.state.conversations];
     const conversation = conversations.find(conv => {
-      return message.start_up_investor_id == conv.id
+      return message.start_up_investor_id === conv.id
       });
     conversation.attributes.messages = [...conversation.attributes.messages, message];
     this.setState({
@@ -88,7 +88,7 @@ class MessagePage extends React.Component {
   filterMessages = () => {
     if (this.state.currentConvo) {
       return this.state.messages.filter(message => {
-        return message.start_up_investor_id === parseInt(this.state.currentConvo.id)
+        return message.start_up_investor_id === parseInt(this.state.currentConvo.id, 10)
       })
     }
   }

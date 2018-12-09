@@ -1,9 +1,8 @@
 import React from 'react'
-import {Input, Button, Divider, Layout, Avatar, Card} from 'antd'
+import {Input, Avatar, Card} from 'antd'
 
 const Search = Input.Search
 const { Meta } = Card;
-const {Header} = Layout
 const URL = 'http://localhost:3000/api/v1/messages'
 
 class MessageWindow extends React.Component {
@@ -51,25 +50,26 @@ class MessageWindow extends React.Component {
   myMessage = (message) => {
     let date = new Date(message.created_at)
     return (
-      <div className='my-message'>
-        <Card className='my-card' style={{ width: 300 }}>
-          <Meta description={date.toString().slice(0, -18)} avatar={<Avatar>ME</Avatar>} />
-          <span style={{float:"right"}}>{message.message_body}</span>
+      <div className='my-message' key={message.id}>
+        <Card className='my-card' style={{ maxwWidth: 300 }}>
+          <Meta description={date.toLocaleTimeString('en-US')} />
+          <span>{message.message_body}</span>
         </Card>
-        <br/>
+        <Avatar style={{margin: '.2rem'}}>ME</Avatar>
       </div>
     )
   }
 
   message = (message) => {
+    // refactor messages into components
     let date = new Date(message.created_at)
     return (
-      <div className='other-message' >
-        <Card className='other-card' style={{ width: 300 }}>
-          <Meta description={date.toString().slice(0, -18)} avatar={<Avatar>{message.username.slice(0)}</Avatar>} />
-          <span style={{float:"right"}}>{message.message_body}</span>
+      <div className='other-message' key={message.id}>
+        <Avatar style={{margin: '.2rem'}}>{message.username.slice(0)}</Avatar>
+        <Card className='other-card' style={{ maxWidth: 300 }}>
+          <Meta description={date.toLocaleTimeString('en-US')} />
+          <span >{message.message_body}</span>
         </Card>
-        <br/>
       </div>
     )
   }
@@ -77,12 +77,12 @@ class MessageWindow extends React.Component {
   render(){
     return (
     <div id='message-window'>
+      <h5 style={{alignSelf: 'center', position: 'fixed'}}>Your conversation with {this.props.type === 'investors' ? this.props.conversation.attributes["start-up"].name : this.props.conversation.attributes.investor.name} </h5>
       <div id='message-box'>
-        <h5 style={{'left': '40%', 'top': '27%', 'position':'fixed'}}>Your conversation with {this.props.type === 'investors' ? this.props.conversation.attributes["start-up"].name : this.props.conversation.attributes.investor.name} </h5>
         {this.makeMessages()}
       </div>
       <div id='new-message-form'>
-        <Search style={{width: '60%'}} placeholder="enter your message" enterButton="Send" size="large" value={this.state.formValue} onChange={this.changing} onSearch={this.sendTheMessage}></Search>
+        <Search style={{width: '100%'}} placeholder="enter your message" enterButton="Send" size="large" value={this.state.formValue} onChange={this.changing} onSearch={this.sendTheMessage}></Search>
       </div>
     </div>)
   }

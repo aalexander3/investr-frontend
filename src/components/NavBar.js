@@ -5,8 +5,7 @@ import {Link} from 'react-router-dom'
 
 const NavBar = (props) => {
 
-return(
-  <div>
+return (
     <Menu mode="horizontal">
       <Menu.Item key="profile">
         <Link to='/settings'><Icon type="idcard" />Profile</Link>
@@ -15,7 +14,7 @@ return(
         <Link to='/'><Icon type="rocket" /> Match Maker </Link>
       </Menu.Item>
       <span>
-        <img id='investr-logo' src={process.env.PUBLIC_URL + '/investr_logo.png'} alt='company-logo'/>
+        <h1 id='investr-logo'>INVESTR</h1>
       </span>
       <Menu.Item key="message" style={{"float":"right"}}>
         <Link to='/messages'><Icon type="coffee" />Messages</Link>
@@ -24,9 +23,7 @@ return(
         { (props.loggedIn) ? <Link to='/login' onClick={props.logout} ><Icon type="lock" />Logout</Link> : <Link to='/login'><Icon type="unlock" />Login</Link> }
       </Menu.Item>
     </Menu>
-  </div>
-)
-
+  )
 }
 
 export default NavBar

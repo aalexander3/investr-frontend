@@ -6,7 +6,7 @@ import DropDown from "./DropDown.js"
 
 
 const { Header } = Layout
-const URL = 'http://localhost:3000/api/v1/start_ups'
+// const URL = 'http://localhost:3000/api/v1/start_ups'
 
 
 class StartUpList extends React.Component {

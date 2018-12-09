@@ -44,7 +44,7 @@ class StartUpCard extends React.Component {
     const data = {username: this.props.username, start_up_id: this.props.startUp.id}
 
     let found = this.state.conversations.find(convo => {
-      return convo.attributes.investor.username === data.username && convo.attributes['start-up'].id === parseInt(data.start_up_id)
+      return convo.attributes.investor.username === data.username && convo.attributes['start-up'].id === parseInt(data.start_up_id, 10)
     })
     // IF not found send post request --------
     if (!found) {
@@ -92,7 +92,7 @@ class StartUpCard extends React.Component {
               <span className='card-title'>{this.props.startUp.attributes.name}</span>
               <p style={{"fontStyle":"italic"}}>{this.props.startUp.attributes.field}</p>
               <div onClick={this.handleClick}>
-                {this.state.details ? <span>Less <Icon type="minus-circle" /></span> : <span>More <Icon type="plus-circle" /> </span>}
+                {this.state.details ? <span className="more-info">Less <Icon type="minus-circle" /></span> : <span className="more-info">More <Icon type="plus-circle" /> </span>}
               </div>
               <br/>
               {(this.state.details) ? this.showTheDeets() : null}
