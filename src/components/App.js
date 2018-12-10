@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom'
-import '../App.css';
+import { Route } from 'react-router-dom'
+import '../styles/App.css';
 // Components
 import NavBar from './NavBar'
 import Login from './Login'

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Icon, Input, Button } from 'antd';
 import Register from './Register'
+import '../styles/Login.css'
 
 const FormItem = Form.Item;
 

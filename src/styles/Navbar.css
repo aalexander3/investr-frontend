@@ -1,0 +1,17 @@
+#investr-logo {
+  width: 10%;
+  left: 42%;
+  position: absolute;
+  font-family: 'Paytone One';
+  font-size: 2.2rem;
+  top: 0;
+}
+
+.ant-menu {
+  height: 6.8vh;
+  z-index: 10;
+}
+
+#message-nav {
+  float: right;
+}

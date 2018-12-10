@@ -6,6 +6,8 @@ import { ActionCable } from 'react-actioncable-provider';
 import Cable from './Cable';
 import MessageWindow from './MessageWindow'
 import withAuth from '../HOC/withAuth'
+import '../styles/Message.css'
+
 
 const { Header } = Layout
 const URL = 'http://localhost:3000/api/v1/start_up_investors'

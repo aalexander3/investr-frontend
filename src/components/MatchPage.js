@@ -1,7 +1,7 @@
 import React from 'react'
 import withAuth from '../HOC/withAuth'
-
 import StartUpList from "./StartUpList.js"
+import '../styles/Match.css'
 
 const MatchPage = (props) => {
 

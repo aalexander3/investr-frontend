@@ -1,0 +1,101 @@
+#message-window {
+  margin: 4%;
+  background: #EDEDEF;
+  border-left: #3B627E solid .5rem;
+  padding: 2.5% 2% 2% 2%;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 90% 10%;
+}
+
+#message-window h5 {
+  position: fixed;
+  left: 40%;
+}
+
+#new-message-form {
+  text-align: right;
+  width: 80%;
+  grid-column: 1/3;
+  grid-row: 2;
+  display: inline;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: .2rem;
+  line-height: normal;
+  max-width: 400px;
+}
+
+.my.message {
+  float: right;
+  text-align: right;
+  margin-left: 34rem;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.other.message {
+  float: left;
+  text-align: left;
+  margin-right: 34rem;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.message-avatar {
+  display: inline;
+  margin-right: 1em;
+  cursor: pointer;
+}
+
+.card {
+  transition: all .3s linear;
+}
+
+.card:hover{
+  transform: scale3d(1.008, 1.008, 1);
+  box-shadow: 0 8px 18px 0 rgba(0, 0, 0, .3), 0 6px 20px 0 rgba(0, 0, 0, .15);
+  z-index: 20;
+}
+
+.ant-card.my.card {
+  background-color: #5799C3;
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+ }
+
+.ant-card.other.card {
+  background-color: #B7F0ED;
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+ }
+
+#convo-banner{
+  text-align: center;
+  width: 30%;
+  top: 19.5%;
+  left: 36%;
+  position: absolute;
+  z-index: 10;
+  padding: 2%;
+  color: white;
+  background-color: #5799C3;
+  border-radius: 10%;
+}
+
+#message-box{
+  grid-column: 1/3;
+  grid-row: 1;
+  height: 50vh;
+  overflow: scroll;
+  margin-bottom: 2%;
+  line-height: 1rem;
+  scroll-behavior: smooth;
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Menu, Icon } from 'antd';
 import {Link} from 'react-router-dom'
-
+import '../styles/Navbar.css'
 
 const NavBar = (props) => {
 
