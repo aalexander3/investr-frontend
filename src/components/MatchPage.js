@@ -3,11 +3,18 @@ import withAuth from '../HOC/withAuth'
 import StartUpList from "./StartUpList.js"
 import '../styles/Match.css'
 
-const MatchPage = (props) => {
+import { Layout } from 'antd';
+const { Header } = Layout
+
+
+const MatchPage = ({username, investors, startUps, currentUser }) => {
 
   return(
-    <div>
-      <StartUpList username={props.username} investors={props.investors} startUps={props.startUps} currentUser={props.currentUser}/>
+    <div style={{margin:'1% 4%'}}>
+      <Header style={{background: 'white'}}>
+        {currentUser.type === 'investors' ? <h1>Your startups favorite startups</h1> : <h1>I'm an investor, invested in investing</h1>}
+      </Header>
+      <StartUpList username={username} investors={investors} startUps={startUps} currentUser={currentUser}/>
     </div>
   )
 }

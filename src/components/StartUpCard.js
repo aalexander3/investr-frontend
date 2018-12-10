@@ -15,11 +15,14 @@ class StartUpCard extends React.Component {
   }
 
   componentDidMount = () => {
-    fetch(URL).then(res => res.json()).then(json => {
-      this.setState({
-        conversations: json.data
-      }, () => console.log(this.state.conversations))
-    })
+    fetch(URL)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          conversations: json.data
+        }, this.likedStartup)
+      })
+
   }
 
   handleClick = () => {
@@ -35,6 +38,13 @@ class StartUpCard extends React.Component {
         <strong>Description:</strong><p>{this.props.startUp.attributes.description}</p>
       </div>
     )
+  }
+
+  likedStartup = () => {
+    let found = this.state.conversations.find(conv => conv.relationships['start-up'].data.id === this.props.startUp.id)
+    if (found){
+      this.setState({liked: true})
+    }
   }
 
   handleLikes = () => {
@@ -63,6 +73,7 @@ class StartUpCard extends React.Component {
     this.setState({
       disliked: true
     })
+    // send a patch that officially dislikes the connection and doesn't show up again
   }
 
   makeButtonsAppear = () => {

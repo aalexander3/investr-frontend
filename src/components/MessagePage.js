@@ -52,7 +52,7 @@ class MessagePage extends React.Component {
   }
 
   renderStartups = () => {
-    return this.state.conversations.map(conversation => <MessageAvatar type={this.props.currentUser.type}
+    return this.state.conversations.map(conversation => <MessageAvatar key={conversation.id} type={this.props.currentUser.type}
         conversation={conversation}
         startNewMessage={this.startNewMessage}/>)
   }

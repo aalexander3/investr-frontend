@@ -194,9 +194,8 @@ class App extends Component {
         <Route exact path='/settings' render={ (renderProps) => {
           return <SettingsPage
             loggedIn={this.state.form.loggedIn}
-            filterUser={this.findUser}
-            // investors={this.state.investors}
-            username={this.state.form.username}/>
+            investor={this.state.currentUser}
+            username={this.state.form.username} />
           }} />
           <Route exact path='/messages' render={ (renderProps) => {
             return <MessagePage

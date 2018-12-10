@@ -1,7 +1,8 @@
 ## clean up components | Priority 1
 - messages should be a component ✔️
 - messageInput should be a component ✅
-- fix organization of the settings page.... yikes
+- fix organization of the settings page.... yikes ✅
+- fix organization of the match page.... yikes
 - reorganize a little
 
 ## Organize css | Priority 2
