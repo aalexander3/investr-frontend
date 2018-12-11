@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import '../styles/App.css';
 // Components
 import NavBar from './NavBar'
@@ -7,7 +7,7 @@ import Login from './Login'
 import SettingsPage from './SettingsPage'
 import MatchPage from './MatchPage'
 import MessagePage from './MessagePage'
-import { StartUpsAdapter, InvestorsAdapter } from '../adapters/Adapter.js'
+import { StartUpsAdapter, InvestorsAdapter, SessionsAdapter } from '../adapters/Adapter.js'
 
 const URL = "http://localhost:3000/api/v1/investors"
 const startUpURL = "http://localhost:3000/api/v1/start_ups"
@@ -43,6 +43,7 @@ class App extends Component {
   componentDidMount() {
     this.fetchInvestors()
     this.fetchStartUp()
+    // check for login - in localStorage
   }
 
   fetchStartUp = () => {
@@ -55,56 +56,71 @@ class App extends Component {
       .then(investors => this.setState({ investors: investors.data }))
   }
 
-  submitForm = (history) => {
+  submitForm = () => {
     if (this.state.form.signingUp) {
-      this.register(history)
+      this.register()
     } else if (this.state.form.username !== '') {
-      let user = this.findUser()
-      if (user) {
-        this.setState({
-          ...this.state,
-          form: {
-            ...this.state.form,
-            loggedIn: true
-          },
-          currentUser: user
-        }, () => {
-          history.push("/settings")
-        })}
-      }
+        // request to sessions controller
+        // try login
+        const { username, password } = this.state.form
+        const loginObj = { username, password }
+
+        SessionsAdapter.login(loginObj)
+          .then(json => {
+            let { user, token } = json
+            console.log(user)
+            this._setToken(token)
+            if (user) {
+              this.loginUser(user.data)
+            }
+            // save token into local storage
+            // setState of currentUser  && logged in (like below)
+        })
+    }
   }
 
-  register = (history) => {
+  _setToken = token => (localStorage.setItem('token', token))
+
+  _getToken = () => (localStorage.getItem('token'))
+
+  loginUser = user => {
+    this.setState({
+      ...this.state,
+      form: {
+        ...this.state.form,
+        loggedIn: true
+      },
+      currentUser: user
+    }, () => this.props.history.push("/")
+  )}
+
+
+  register = () => {
     if (this.state.form.type === 'startup') {
-      fetch(startUpURL, {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify(this.state.form)
-      }).then(res => res.json()).then(json => {
-        this.setState({
-          startUps: json.data,
-          form: {
-            ...this.state.form,
-            signingUp: false
-          }
-        }, () => this.submitForm(history))
-      })
+      StartUpsAdapter.create(this.state.form)
+        .then(json => {
+          this.setState({
+            startUps: json.data,
+            form: {
+              ...this.state.form,
+              signingUp: false
+            }
+          }, () => this.props.history.push('/'))
+        })
 
     } else if (this.state.form.type === 'investor') {
-      fetch(URL, {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify(this.state.form)
-      }).then(res => res.json()).then(json => {
-        this.setState({
-          investors: json.data,
-          form: {
-            ...this.state.form,
-            signingUp: false
-          }
-        }, () => this.submitForm(history))
-      })
-    }
+        InvestorsAdapter.create(this.state.form)
+          .then(json => {
+            console.log(json)
+            // this.setState({
+            //   investors: json.data,
+            //   form: {
+            //     ...this.state.form,
+            //     signingUp: false
+            //   }
+            // })
+          })
+        }
   }
 
   handleChange = (event) => {
@@ -125,7 +141,7 @@ class App extends Component {
     })
   }
 
-  logout = (event) => {
+  logout = () => {
     this.setState({
       form:  {
         loggedIn: false,
@@ -210,4 +226,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App)

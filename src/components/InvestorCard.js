@@ -4,11 +4,8 @@ import { Icon, Divider} from 'antd';
 
 class InvestorCard extends React.Component {
 
-  onPanelChange(value, mode) {
-    console.log(value, mode);
-  }
-
   render(){
+    console.log(this.props)
     return (
       <div className="card-banner">
           <img className="cover-photo" alt="cover" src='http://s3.amazonaws.com/s3.timetoast.com/public/uploads/photos/6327469/blurry-blue-background-ii_facebook_timeline_cover.jpg?1477360789' />

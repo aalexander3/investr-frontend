@@ -9,10 +9,10 @@ const { Header } = Layout
 
 const MatchPage = ({username, investors, startUps, currentUser }) => {
 
-  return(
+  return (
     <div style={{margin:'1% 4%'}}>
       <Header style={{background: 'white'}}>
-        {currentUser.type === 'investors' ? <h1>Your startups favorite startups</h1> : <h1>I'm an investor, invested in investing</h1>}
+        {currentUser.type === 'investor' ? <h1>Your startups favorite startups</h1> : <h1>I'm an investor, invested in investing</h1>}
       </Header>
       <StartUpList username={username} investors={investors} startUps={startUps} currentUser={currentUser}/>
     </div>

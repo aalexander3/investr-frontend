@@ -11,18 +11,10 @@ class StartUpCard extends React.Component {
     disliked: false,
     errors: null,
     liked: false,
-    conversations: []
   }
 
   componentDidMount = () => {
-    fetch(URL)
-      .then(res => res.json())
-      .then(json => {
-        this.setState({
-          conversations: json.data
-        }, this.likedStartup)
-      })
-
+    this.likedStartup()
   }
 
   handleClick = () => {
@@ -41,23 +33,28 @@ class StartUpCard extends React.Component {
   }
 
   likedStartup = () => {
-    let found = this.state.conversations.find(conv => conv.relationships['start-up'].data.id === this.props.startUp.id)
+    let found = this.findStartup()
     if (found){
       this.setState({liked: true})
     }
   }
 
-  handleLikes = () => {
-    this.setState({
-      liked: true
-    })
-    const data = {username: this.props.username, start_up_id: this.props.startUp.id}
+  findStartup = () => {
+    // trying to see if the startup has been liked previously
+    const whatType = this.props.currentUser.type === 'investor' ? 'start_ups' : 'investors'
 
-    let found = this.state.conversations.find(convo => {
-      return convo.attributes.investor.username === data.username && convo.attributes['start-up'].id === parseInt(data.start_up_id, 10)
-    })
+    let found = this.props.currentUser.attributes[whatType].find(conv => conv.id === parseInt(this.props.startUp.id,10))
+    return found
+  }
+
+  handleLikes = () => {
+    let found = this.findStartup()
     // IF not found send post request --------
     if (!found) {
+      this.setState({
+        liked: true
+      })
+      const data = {username: this.props.username, start_up_id: this.props.startUp.id}
       fetch(URL, {
         method: "POST",
         body: JSON.stringify(data),
@@ -79,7 +76,9 @@ class StartUpCard extends React.Component {
   makeButtonsAppear = () => {
     return (
       <div>
-        {this.state.liked ? <img className='like-stamp' alt="like stamp" src={process.env.PUBLIC_URL + '/like-stamp.png'} /> : <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
+        {this.state.liked ?
+          <img className='like-stamp' alt="like stamp" src={process.env.PUBLIC_URL + '/like-stamp.png'} /> :
+          <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
         <Button type="default" icon="dislike" size='small' className='login-buttons' onClick={this.handleDisLikes}>NO THANKS</Button>
       </div>
     )
@@ -88,28 +87,26 @@ class StartUpCard extends React.Component {
     render() {
       if (!this.state.disliked) {
         return (
-          <div>
             <Col className="start-up-card" span={8}>
               {(this.state.errors) ? <Alert message={this.state.errors} type="error" /> : null }
 
               <div className='card-floater'>
                 <img src={this.props.startUp.attributes.logo} alt="card logo" className='card-logo' align="middle" />
                 <br/>
-                {this.props.currentUser.type === 'investors' ? this.makeButtonsAppear() : <strong>Investor</strong>}
-                <Divider/>
+                {this.props.currentUser.type === 'investor' ? this.makeButtonsAppear() : <strong>Investor</strong>}
+                <Divider />
               </div>
 
               <div className='content'>
-              <span className='card-title'>{this.props.startUp.attributes.name}</span>
-              <p style={{"fontStyle":"italic"}}>{this.props.startUp.attributes.field}</p>
-              <div onClick={this.handleClick}>
-                {this.state.details ? <span className="more-info">Less <Icon type="minus-circle" /></span> : <span className="more-info">More <Icon type="plus-circle" /> </span>}
+                <span className='card-title'>{this.props.startUp.attributes.name}</span>
+                <p style={{"fontStyle":"italic"}}>{this.props.startUp.attributes.field}</p>
+                <div onClick={this.handleClick}>
+                  {this.state.details ? <span className="more-info">Less <Icon type="minus-circle" /></span> : <span className="more-info">More <Icon type="plus-circle" /> </span>}
+                </div>
+                <br/>
+                {this.state.details ? this.showTheDeets() : null}
               </div>
-              <br/>
-              {(this.state.details) ? this.showTheDeets() : null}
-            </div>
             </Col>
-          </div>
         )
       } else {
         return null

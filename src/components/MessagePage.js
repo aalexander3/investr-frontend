@@ -8,9 +8,7 @@ import MessageWindow from './MessageWindow'
 import withAuth from '../HOC/withAuth'
 import '../styles/Message.css'
 
-
 const { Header } = Layout
-const URL = 'http://localhost:3000/api/v1/start_up_investors'
 
 class MessagePage extends React.Component {
 
@@ -21,23 +19,19 @@ class MessagePage extends React.Component {
   }
 
   componentDidMount = () => {
-    fetch(URL).then(res => res.json()).then(json => {
-      const filteredList = json.data.filter(connection => {
-        return (this.props.currentUser.type === 'investors') ? connection.attributes.investor.username === this.props.username : connection.attributes['start-up'].username === this.props.username
-      })
-
-      const messageList = this.mapTheMess(json.data)
+    const filteredList = this.props.currentUser.attributes.start_up_investors.data
+    const messageList = this.mapTheMess(filteredList)
 
       this.setState({
         conversations: filteredList,
         messages: messageList
       })
-    })
   }
 
-  mapTheMess = (data) => {
+  mapTheMess = (conversations) => {
     let mappedMess = []
-    data.forEach(conversation => {
+
+    conversations.forEach(conversation => {
       conversation.attributes.messages.forEach(message => {
         mappedMess.push(message)
       })
@@ -52,20 +46,23 @@ class MessagePage extends React.Component {
   }
 
   renderStartups = () => {
-    return this.state.conversations.map(conversation => <MessageAvatar key={conversation.id} type={this.props.currentUser.type}
+    return this.state.conversations.map(conversation => <MessageAvatar
+        key={conversation.id}
+        type={this.props.currentUser.type}
         conversation={conversation}
         startNewMessage={this.startNewMessage}/>)
   }
 
   handleReceivedConversation = response => {
-    const { conversation } = response;
-    this.setState({
-      conversations: [...this.state.conversations, conversation]
-    });
+    // need to check if new conversations are being added and what the repsonse looks like
+    // const { conversation } = response;
+    // this.setState({
+    //   conversations: [...this.state.conversations, conversation]
+    // })
   }
 
   handleReceivedMessage = response => {
-    const { message } = response;
+    const message = response.data.attributes;
     const conversations = [...this.state.conversations];
     const conversation = conversations.find(conv => message.start_up_investor_id === parseInt(conv.id,10))
     conversation.attributes.messages = [...conversation.attributes.messages, message];

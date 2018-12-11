@@ -57,6 +57,10 @@ img.card-logo {
   width: 30%;
 }
 
+.ant-select {
+  width: 100%;
+}
+
 .like-stamp {
   width: 70%;
   position: absolute;

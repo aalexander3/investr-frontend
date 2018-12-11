@@ -7,11 +7,11 @@ const MessageAvatar = props => {
   }
 
   const renderAvatars = () => {
-    console.log(props.type)
-    if (props.type === 'investors') {
+    console.log(props)
+    if (props.type === 'investor') {
       return (
-        <Popover content={props.conversation.attributes["start-up"].name}>
-          <Avatar src={props.conversation.attributes["start-up"].logo}/>
+        <Popover content={props.conversation.attributes["start_up"].name}>
+          <Avatar src={props.conversation.attributes["start_up"].logo}/>
         </Popover>
       )
     } else {

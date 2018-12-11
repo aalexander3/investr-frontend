@@ -13,7 +13,7 @@ class StartUpList extends React.Component {
   }
 
   componentDidMount(){
-    if (this.props.currentUser.type === "start-ups") {
+    if (this.props.currentUser.type === "start_up") {
       this.setState({
         filteredStartUps: this.props.investors
       })
@@ -37,17 +37,19 @@ class StartUpList extends React.Component {
     this.setState({
       value: event.target.value
     }, () => {
-      if (this.props.currentUser.type === "investors") {
+      if (this.props.currentUser.type === "investor") {
         this.setState({
-          filteredStartUps: this.props.startUps.filter(startUp => startUp.attributes.name.toLowerCase().includes(this.state.value))
+          filteredStartUps: this.props.startUps.filter(this.filterObject)
         })
       } else {
           this.setState({
-            filteredStartUps: this.props.investors.filter(investor => investor.attributes.name.toLowerCase().includes(this.state.value))
+            filteredStartUps: this.props.investors.filter(this.filterObject)
           })
         }
     })
   }
+
+  filterObject = obj => obj.attributes.name.toLowerCase().includes(this.state.value)
 
   onDropDownChange = event => {
     if (event === 'all') {
@@ -66,8 +68,8 @@ class StartUpList extends React.Component {
   render() {
     return(
       <div>
-        <Filter onChange={this.onChange}/>
-        {this.props.currentUser.type === 'investors'? <DropDown onChange={this.onDropDownChange}/> : null}
+        <Filter onChange={this.onChange} />
+        {this.props.currentUser.type === 'investor'? <DropDown onChange={this.onDropDownChange}/> : null}
         <Divider />
         <div className='start-up-container'>
           {this.makeStartUpCards()}

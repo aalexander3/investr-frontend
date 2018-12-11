@@ -1,9 +1,14 @@
 ## clean up components | Priority 1
-- messages should be a component ✔️
+- messages should be a component ✅
 - messageInput should be a component ✅
 - fix organization of the settings page.... yikes ✅
 - fix organization of the match page.... yikes
 - reorganize a little
+
+## match page
+ - state needs to live at the top
+ - filter needs to go through state
+ - only pass down the list to be rendered
 
 ## Organize css | Priority 2
  - more files everywhere ✅
@@ -16,12 +21,15 @@
   - that's all!
 
 ## make startup likes persist && render that way | Priority 4
+  - did a sort of conditional render with the like stamp ✅
   - probably already close? check schema and what request (if any) is being sent off
+  - toggles in state
 
 ## better authorization / authentication | Priority 5
 - implement with JWT and localStorage
 - auth on the backend
 - clean up login form MAJORLY
+- fix up backend users - big overhaul
 
 ## Keep working on the adapter | Priority 5
  - what endpoints need to be exposed?

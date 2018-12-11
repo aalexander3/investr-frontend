@@ -26,7 +26,7 @@ const MessageWindow = props => {
 
   return (
     <div id='message-window'>
-      <h5 style={{alignSelf: 'center', position: 'fixed'}}>Your conversation with {props.type === 'investors' ? props.conversation.attributes["start-up"].name : props.conversation.attributes.investor.name} </h5>
+      <h5 style={{alignSelf: 'center', position: 'fixed'}}>Your conversation with {props.type === 'investor' ? props.conversation.attributes["start_up"].name : props.conversation.attributes.investor.name} </h5>
       <div id='message-box'>
         {makeMessages()}
       </div>
