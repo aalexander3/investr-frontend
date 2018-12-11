@@ -19,13 +19,14 @@ class SettingsPage extends Component {
   }
 
   makeInvestorCard = () => {
-    if (this.props.username){
+    if (this.props.investor.attributes){
       const filteredUser = this.props.investor
       return <InvestorCard attributes={filteredUser.attributes} connections={this.mapConnections()} />
     }
   }
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <Layout hasSider={true}>

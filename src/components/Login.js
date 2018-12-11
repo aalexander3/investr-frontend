@@ -9,7 +9,7 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    props.submitForm(props.history)
+    props.submitForm()
   }
 
   const showSignUpFields = () => {

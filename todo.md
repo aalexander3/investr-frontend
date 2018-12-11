@@ -25,8 +25,8 @@
   - probably already close? check schema and what request (if any) is being sent off
   - toggles in state
 
-## better authorization / authentication | Priority 5
-- implement with JWT and localStorage
+## better authorization / authentication | Priority 5 ✅
+- implement with JWT and localStorage ✅
 - auth on the backend
 - clean up login form MAJORLY
 - fix up backend users - big overhaul

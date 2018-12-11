@@ -9,15 +9,6 @@ import MatchPage from './MatchPage'
 import MessagePage from './MessagePage'
 import { StartUpsAdapter, InvestorsAdapter, SessionsAdapter } from '../adapters/Adapter.js'
 
-const URL = "http://localhost:3000/api/v1/investors"
-const startUpURL = "http://localhost:3000/api/v1/start_ups"
-const HEADERS = {
-  'Content-Type': 'application/json',
-  'Accepts': 'application/json'
-}
-
-
-
 class App extends Component {
   state = {
     form: {
@@ -43,16 +34,20 @@ class App extends Component {
   componentDidMount() {
     this.fetchInvestors()
     this.fetchStartUp()
-    // check for login - in localStorage
+    let token = this._getToken()
+    if (token) {
+      SessionsAdapter.reauth(token)
+        .then(user => this.loginUser(user.data))
+    }
   }
 
   fetchStartUp = () => {
-    StartUpsAdapter.index()
+    return StartUpsAdapter.index()
       .then(startUps => this.setState({ startUps: startUps.data }))
   }
 
   fetchInvestors = () => {
-    InvestorsAdapter.index()
+    return InvestorsAdapter.index()
       .then(investors => this.setState({ investors: investors.data }))
   }
 
@@ -60,8 +55,6 @@ class App extends Component {
     if (this.state.form.signingUp) {
       this.register()
     } else if (this.state.form.username !== '') {
-        // request to sessions controller
-        // try login
         const { username, password } = this.state.form
         const loginObj = { username, password }
 
@@ -73,8 +66,6 @@ class App extends Component {
             if (user) {
               this.loginUser(user.data)
             }
-            // save token into local storage
-            // setState of currentUser  && logged in (like below)
         })
     }
   }
@@ -82,6 +73,8 @@ class App extends Component {
   _setToken = token => (localStorage.setItem('token', token))
 
   _getToken = () => (localStorage.getItem('token'))
+
+  _removeToken = () => (localStorage.removeItem('token'))
 
   loginUser = user => {
     this.setState({
@@ -91,7 +84,7 @@ class App extends Component {
         loggedIn: true
       },
       currentUser: user
-    }, () => this.props.history.push("/")
+    }, () => this.props.history.push('/')
   )}
 
 
@@ -111,14 +104,13 @@ class App extends Component {
     } else if (this.state.form.type === 'investor') {
         InvestorsAdapter.create(this.state.form)
           .then(json => {
-            console.log(json)
-            // this.setState({
-            //   investors: json.data,
-            //   form: {
-            //     ...this.state.form,
-            //     signingUp: false
-            //   }
-            // })
+            this.setState({
+              investors: json.data,
+              form: {
+                ...this.state.form,
+                signingUp: false
+              }
+            }, () => this.props.history.push('/'))
           })
         }
   }
@@ -142,6 +134,7 @@ class App extends Component {
   }
 
   logout = () => {
+    this._removeToken()
     this.setState({
       form:  {
         loggedIn: false,
@@ -169,21 +162,6 @@ class App extends Component {
     })
   }
 
-  filterStartUp = () => {
-    // make better with auth
-    return this.state.startUps.find(startUp => startUp.attributes.username === this.state.form.username)
-  }
-
-  findUser = () => {
-    let user = this.filterStartUp()
-    if (!user) user = this.filterUser()
-    return user
-  }
-
-  filterUser = () => {
-    return this.state.investors.find(investor => investor.attributes.username === this.state.form.username)
-  }
-
   render() {
     return (
       <div>
@@ -191,7 +169,6 @@ class App extends Component {
         <Route exact path='/' render={ (renderProps) => {
           return <MatchPage
             loggedIn={this.state.form.loggedIn}
-            username={this.state.form.username}
             startUps={this.state.startUps}
             investors={this.state.investors}
             currentUser={this.state.currentUser}
@@ -203,23 +180,17 @@ class App extends Component {
             onDropDownChange={this.onDropDownChange}
             signUpClick={this.signUpClick}
             form={this.state.form}
-            history={ renderProps.history}
-            register={this.register}
             handleChange={this.handleChange}/>
           }} />
         <Route exact path='/settings' render={ (renderProps) => {
           return <SettingsPage
             loggedIn={this.state.form.loggedIn}
-            investor={this.state.currentUser}
-            username={this.state.form.username} />
+            investor={this.state.currentUser} />
           }} />
           <Route exact path='/messages' render={ (renderProps) => {
             return <MessagePage
               loggedIn={this.state.form.loggedIn}
-              currentUser={this.state.currentUser}
-              filterUser={this.findUser}
-              investors={this.state.investors}
-              username={this.state.form.username} />
+              currentUser={this.state.currentUser} />
             }} />
       </div>
     );

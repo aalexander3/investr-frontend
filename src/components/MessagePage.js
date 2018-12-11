@@ -92,11 +92,11 @@ class MessagePage extends React.Component {
         <Header style={{background:"#3B627E"}}>{this.renderStartups()}</Header>
         <ActionCable channel={{ channel: 'StartUpInvestorsChannel' }} onReceived={this.handleReceivedConversation} />
         <Cable conversations={this.state.conversations} handleReceivedMessage={this.handleReceivedMessage} />
-        {this.state.currentConvo && <MessageWindow
+        {this.state.currentConvo && this.props.currentUser.attributes && <MessageWindow
             type={this.props.currentUser.type}
             goToBottom={this.goToBottom}
             filteredMessages={this.filterMessages()}
-            username ={this.props.username}
+            username={this.props.currentUser.attributes.username}
             conversation={this.state.currentConvo}
             conversations={this.state.conversations} /> }
       </div>
