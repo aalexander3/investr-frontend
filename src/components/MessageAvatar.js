@@ -7,7 +7,6 @@ const MessageAvatar = props => {
   }
 
   const renderAvatars = () => {
-    console.log(props)
     if (props.type === 'investor') {
       return (
         <Popover content={props.conversation.attributes["start_up"].name}>

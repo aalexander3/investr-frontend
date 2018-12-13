@@ -124,7 +124,6 @@ class App extends Component {
         InvestorsAdapter.create(this.state.form)
           .then(json => {
             let { user, token } = json
-            console.log(user);
             if (user) {
                 this._setToken(token)
                 this.loginUser(user.data)
@@ -144,7 +143,6 @@ class App extends Component {
   }
 
   onDropDownChange = event => {
-    console.log(event);
     this.setState({
       form: {
         ...this.state.form,
