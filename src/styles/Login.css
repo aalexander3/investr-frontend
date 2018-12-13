@@ -27,4 +27,9 @@ div.ant-row.ant-form-item {
 .login-buttons {
   display: inline;
   margin-right: 1em;
+  cursor: pointer;
+}
+
+p.login-buttons:hover {
+  color: #1890ff;
 }

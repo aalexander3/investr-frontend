@@ -24,7 +24,8 @@ class App extends Component {
       url: '',
       logo: '',
       type: '',
-      funds_to_invest: 0
+      funds_to_invest: 0,
+      error: null
     },
     investors: [],
     startUps: [],
@@ -37,7 +38,9 @@ class App extends Component {
     let token = this._getToken()
     if (token) {
       SessionsAdapter.reauth(token)
-        .then(user => this.loginUser(user.data))
+        .then(user => {
+          this.loginUser(user.data)
+        })
     }
   }
 
@@ -60,12 +63,22 @@ class App extends Component {
 
         SessionsAdapter.login(loginObj)
           .then(json => {
+
+            if (json.error) throw(json.error)
             let { user, token } = json
-            console.log(user)
-            this._setToken(token)
             if (user) {
+              this._setToken(token)
               this.loginUser(user.data)
             }
+        })
+        .catch(error => {
+          this.setState({
+            ...this.state,
+            form: {
+              ...this.state.form,
+              error
+            }
+          })
         })
     }
   }
@@ -92,11 +105,14 @@ class App extends Component {
     if (this.state.form.type === 'startup') {
       StartUpsAdapter.create(this.state.form)
         .then(json => {
+          // do we get token from here? .... not yet
+          // also add a catch and some kind of validations
           this.setState({
-            startUps: json.data,
+            currentUser: json.data,
             form: {
               ...this.state.form,
-              signingUp: false
+              signingUp: false,
+              loggedIn: true
             }
           }, () => this.props.history.push('/'))
         })
@@ -105,10 +121,11 @@ class App extends Component {
         InvestorsAdapter.create(this.state.form)
           .then(json => {
             this.setState({
-              investors: json.data,
+              currentUser: json.data,
               form: {
                 ...this.state.form,
-                signingUp: false
+                signingUp: false,
+                loggedIn: true
               }
             }, () => this.props.history.push('/'))
           })
@@ -119,6 +136,7 @@ class App extends Component {
     this.setState({
       form: {
         ...this.state.form,
+        error: null,
         [event.target.name]: event.target.value
       }
     })
@@ -147,7 +165,8 @@ class App extends Component {
         interests: '',
         url: '',
         logo: '',
-        type: ''
+        type: '',
+        error: null
       },
       currentUser: null
     })
@@ -185,7 +204,7 @@ class App extends Component {
         <Route exact path='/settings' render={ (renderProps) => {
           return <SettingsPage
             loggedIn={this.state.form.loggedIn}
-            investor={this.state.currentUser} />
+            currentUser={this.state.currentUser} />
           }} />
           <Route exact path='/messages' render={ (renderProps) => {
             return <MessagePage

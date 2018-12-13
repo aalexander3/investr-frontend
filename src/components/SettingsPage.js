@@ -10,8 +10,8 @@ const { Content } = Layout
 class SettingsPage extends Component {
 
   mapConnections = () => {
-      const whatType = this.props.investor.type === "investor" ? 'start_ups' : 'investors'
-      return this.props.investor.attributes[whatType].map(connection => {
+      const whatType = this.props.currentUser.type === "investor" ? 'start_ups' : 'investors'
+      return this.props.currentUser.attributes[whatType].map(connection => {
         const { name, logo, url } = connection
 
         return { name, logo, url }
@@ -19,14 +19,13 @@ class SettingsPage extends Component {
   }
 
   makeInvestorCard = () => {
-    if (this.props.investor.attributes){
-      const filteredUser = this.props.investor
+    if (this.props.currentUser.attributes){
+      const filteredUser = this.props.currentUser
       return <InvestorCard attributes={filteredUser.attributes} connections={this.mapConnections()} />
     }
   }
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <Layout hasSider={true}>

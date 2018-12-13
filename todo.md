@@ -28,10 +28,10 @@
 ## better authorization / authentication | Priority 5 ✅
 - implement with JWT and localStorage ✅
 - auth on the backend
+- creating a user should immediately log them in
 - clean up login form MAJORLY
-- fix up backend users - big overhaul
 
-## Keep working on the adapter | Priority 5
+## Keep working on the adapter | Priority 5 ✅
  - what endpoints need to be exposed?
  - how can we clean up more with auth?
  - move all fetches into adapters

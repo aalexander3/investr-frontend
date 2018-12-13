@@ -21,15 +21,26 @@ const Login = (props) => {
       <div className='container'>
         <Form className="login-form" onSubmit={handleSubmit}>
           <h1>{!props.signingUp ? "Member Login" : "Register"}</h1>
-          <FormItem>
+          <FormItem
+            validateStatus={props.form.error ? "error" : ""}
+            help={props.form.error ? props.form.error : ""}
+            hasFeedback >
             <Input name="username"
               onChange={props.handleChange}
-              prefix={<Icon type="user"
-              style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Username" value={props.form.username} />
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+              value={props.form.username} />
           </FormItem>
-          <FormItem>
-            <Input name="password" onChange={props.handleChange} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" value={props.form.password} />
+          <FormItem
+            validateStatus={props.form.error ? "error" : ""}
+            help={props.form.error ? props.form.error : ""}
+            hasFeedback >
+            <Input name="password"
+              onChange={props.handleChange}
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              type="password"
+              placeholder="Password"
+              value={props.form.password} />
           </FormItem>
             { props.signingUp && showSignUpFields() }
             { props.signingUp ?
