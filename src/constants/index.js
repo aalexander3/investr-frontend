@@ -1,6 +1,2 @@
-export const ROOT_URL = 'http://localhost:3000/api/v1'
-export const API_WS_ROOT = 'ws://localhost:3000/cable';
-export const HEADERS = {
-  'Content-Type': 'application/json',
-  'Accepts': 'application/json'
-};
+// export const API_WS_ROOT = 'ws://localhost:3000/cable';
+export const API_WS_ROOT = 'wss://investr-api.herokuapp.com/cable'

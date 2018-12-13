@@ -1,7 +1,6 @@
 import React from 'react'
 import { Layout } from 'antd';
 import MessageAvatar from "./MessageAvatar.js"
-import { ActionCable } from 'react-actioncable-provider';
 // import { API_ROOT } from '../constants';
 import Cable from './Cable';
 import MessageWindow from './MessageWindow'
@@ -53,14 +52,6 @@ class MessagePage extends React.Component {
         startNewMessage={this.startNewMessage}/>)
   }
 
-  handleReceivedConversation = response => {
-    // need to check if new conversations are being added and what the repsonse looks like
-    // const { conversation } = response;
-    // this.setState({
-    //   conversations: [...this.state.conversations, conversation]
-    // })
-  }
-
   handleReceivedMessage = response => {
     const message = response.data.attributes;
     const conversations = [...this.state.conversations];
@@ -90,7 +81,6 @@ class MessagePage extends React.Component {
     return(
       <div>
         <Header style={{background:"#3B627E"}}>{this.renderStartups()}</Header>
-        <ActionCable channel={{ channel: 'StartUpInvestorsChannel' }} onReceived={this.handleReceivedConversation} />
         <Cable conversations={this.state.conversations} handleReceivedMessage={this.handleReceivedMessage} />
         {this.state.currentConvo && this.props.currentUser.attributes && <MessageWindow
             type={this.props.currentUser.type}

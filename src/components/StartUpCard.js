@@ -1,9 +1,6 @@
 import React from "react"
 import { Col, Divider, Icon, Button, Alert } from 'antd'
-// import LikeStamp from '../../public/like-stamp.jpg'
-
-const URL = 'http://localhost:3000/api/v1/start_up_investors'
-
+import { ConnectionsAdapter } from '../adapters/Adapter'
 
 class StartUpCard extends React.Component {
   state = {
@@ -55,14 +52,8 @@ class StartUpCard extends React.Component {
         liked: true
       })
       const data = {username: this.props.username, start_up_id: this.props.startUp.id}
-      fetch(URL, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Accepts" : "application/json",
-          'Content-type': "application/json"
-        }
-      })
+
+      ConnectionsAdapter.create(data)
     }
   }
 

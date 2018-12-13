@@ -4,6 +4,7 @@ import StartUpList from "./StartUpList.js"
 import Filter from "./Filter.js"
 import DropDown from "./DropDown.js"
 import { Divider } from 'antd'
+import { ActionCable } from 'react-actioncable-provider';
 
 import '../styles/Match.css'
 
@@ -35,11 +36,18 @@ class MatchPage extends Component {
     })
   }
 
+  handleReceivedConversation = response => {
+    this.props.addConnection(response.data)
+  }
+
+
   render(){
-    const { currentUser, startUps} = this.props
+    const { currentUser, startUps } = this.props
 
     return (
       <div style={{margin:'1% 4%'}}>
+        <ActionCable channel={{ channel: 'StartUpInvestorsChannel' }} onReceived={this.handleReceivedConversation} />
+
         <Header style={{background: 'white'}}>
           {currentUser.type === 'investor' ? <h1>Your startups favorite startups</h1> : <h1>I'm an investor, invested in investing</h1>}
         </Header>

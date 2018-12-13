@@ -183,6 +183,20 @@ class App extends Component {
     })
   }
 
+  addConnection = (connection) => {
+    this.setState({
+      currentUser: {
+        ...this.state.currentUser,
+        attributes: {
+          ...this.state.currentUser.attributes,
+          start_up_investors: {
+            data: [...this.state.currentUser.attributes.start_up_investors.data, connection]
+          }
+        }
+      }
+    })
+  }
+
   render() {
     return (
       <div>
@@ -191,8 +205,8 @@ class App extends Component {
           return <MatchPage
             loggedIn={this.state.form.loggedIn}
             startUps={this.state.startUps}
-            // investors={this.state.investors}
             currentUser={this.state.currentUser}
+            addConnection={this.addConnection}
           />
           }} />
         <Route exact path='/login' render={ (renderProps) => {

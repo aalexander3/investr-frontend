@@ -1,7 +1,9 @@
-const BASE_URL ="http://localhost:3000/api/v1/"
-const URL = "http://localhost:3000/api/v1/investors"
-const startUpURL = "http://localhost:3000/api/v1/start_ups"
-const MESSAGES_URL = 'http://localhost:3000/api/v1/messages'
+const BASE_URL ="https://investr-api.herokuapp.com/api/v1"
+// const BASE_URL = "http://localhost:3000/api/v1"
+const URL = `${BASE_URL}/investors`
+const startUpURL = `${BASE_URL}/start_ups`
+const MESSAGES_URL = `${BASE_URL}/messages`
+const CONNECTIONS_URL = `${BASE_URL}/start_up_investors`
 
 const headers = {
   'Content-Type': 'application/json',
@@ -39,10 +41,14 @@ export const StartUpsAdapter = {
 }
 
 export const SessionsAdapter = {
-  login: (body) => fetch(`${BASE_URL}login`, config('POST', body)).then(res => res.json()),
-  reauth: (token) => fetch(`${BASE_URL}authorize`, configWithAuth(token)).then(res => res.json())
+  login: (body) => fetch(`${BASE_URL}/login`, config('POST', body)).then(res => res.json()),
+  reauth: (token) => fetch(`${BASE_URL}/authorize`, configWithAuth(token)).then(res => res.json())
 }
 
 export const MessagesAdapter = {
   create: (body) => fetch(MESSAGES_URL, config("POST", body))
+}
+
+export const ConnectionsAdapter = {
+  create: (body) => fetch(CONNECTIONS_URL, config("POST", body))
 }
