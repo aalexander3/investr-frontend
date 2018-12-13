@@ -1,14 +1,15 @@
 ## clean up components | Priority 1
 - messages should be a component ✅
 - messageInput should be a component ✅
-- fix organization of the settings page.... yikes ✅
-- fix organization of the match page.... yikes
+- fix organization of the settings page ✅
+- fix organization of the match page ✅
 - reorganize a little
 
 ## match page
- - state needs to live at the top
- - filter needs to go through state
- - only pass down the list to be rendered
+ - state needs to live at the top ✅
+ - filter needs to go through state ✅
+ - only pass down the list to be rendered ✅
+ - add the liked attribute on connections so it persists and makes it easier to render (see number 4)
 
 ## Organize css | Priority 2
  - more files everywhere ✅
@@ -27,7 +28,7 @@
 
 ## better authorization / authentication | Priority 5 ✅
 - implement with JWT and localStorage ✅
-- auth on the backend
+- auth on the backend ✅
 - creating a user should immediately log them in
 - clean up login form MAJORLY
 

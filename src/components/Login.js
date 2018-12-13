@@ -13,7 +13,7 @@ const Login = (props) => {
   }
 
   const showSignUpFields = () => {
-    return <Register handleChange={props.handleChange} form={props.form} />
+    return <Register handleChange={props.handleChange} form={props.form} onDropDownChange={props.onDropDownChange}/>
   }
 
   return(

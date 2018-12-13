@@ -23,35 +23,30 @@ class App extends Component {
       interests: '',
       url: '',
       logo: '',
-      type: '',
+      type: 'startup',
       funds_to_invest: 0,
       error: null
     },
-    investors: [],
     startUps: [],
     currentUser: null
   }
 
   componentDidMount() {
-    this.fetchInvestors()
-    this.fetchStartUp()
     let token = this._getToken()
     if (token) {
       SessionsAdapter.reauth(token)
-        .then(user => {
-          this.loginUser(user.data)
-        })
+        .then(user => this.loginUser(user.data))
     }
   }
 
-  fetchStartUp = () => {
+  fetchStartUps = () => {
     return StartUpsAdapter.index()
       .then(startUps => this.setState({ startUps: startUps.data }))
   }
 
   fetchInvestors = () => {
     return InvestorsAdapter.index()
-      .then(investors => this.setState({ investors: investors.data }))
+      .then(investors => this.setState({ startUps: investors.data }))
   }
 
   submitForm = () => {
@@ -63,7 +58,6 @@ class App extends Component {
 
         SessionsAdapter.login(loginObj)
           .then(json => {
-
             if (json.error) throw(json.error)
             let { user, token } = json
             if (user) {
@@ -89,45 +83,53 @@ class App extends Component {
 
   _removeToken = () => (localStorage.removeItem('token'))
 
-  loginUser = user => {
-    this.setState({
-      ...this.state,
-      form: {
-        ...this.state.form,
-        loggedIn: true
-      },
-      currentUser: user
-    }, () => this.props.history.push('/')
-  )}
+  fetchForUser = (user) => {
+    if (user.type ==='investor'){
+      return this.fetchStartUps()
+    } else {
+      return this.fetchInvestors()
+    }
+  }
 
+  loginUser = user => {
+    this.fetchForUser(user)
+      .then(()=> {
+        this.setState({
+          ...this.state,
+          form: {
+            ...this.state.form,
+            signingUp: false,
+            loggedIn: true
+          },
+          currentUser: user
+        }, () => this.props.history.push('/')
+      )
+    })
+  }
 
   register = () => {
+    debugger
     if (this.state.form.type === 'startup') {
       StartUpsAdapter.create(this.state.form)
         .then(json => {
+          let { user, token } = json
+
+          if (user) {
+            this._setToken(token)
+            this.loginUser(user.data)
+          }
           // do we get token from here? .... not yet
           // also add a catch and some kind of validations
-          this.setState({
-            currentUser: json.data,
-            form: {
-              ...this.state.form,
-              signingUp: false,
-              loggedIn: true
-            }
-          }, () => this.props.history.push('/'))
         })
-
     } else if (this.state.form.type === 'investor') {
         InvestorsAdapter.create(this.state.form)
           .then(json => {
-            this.setState({
-              currentUser: json.data,
-              form: {
-                ...this.state.form,
-                signingUp: false,
-                loggedIn: true
+            let { user, token } = json
+            console.log(user);
+            if (user) {
+                this._setToken(token)
+                this.loginUser(user.data)
               }
-            }, () => this.props.history.push('/'))
           })
         }
   }
@@ -143,6 +145,7 @@ class App extends Component {
   }
 
   onDropDownChange = event => {
+    console.log(event);
     this.setState({
       form: {
         ...this.state.form,
@@ -189,7 +192,7 @@ class App extends Component {
           return <MatchPage
             loggedIn={this.state.form.loggedIn}
             startUps={this.state.startUps}
-            investors={this.state.investors}
+            // investors={this.state.investors}
             currentUser={this.state.currentUser}
           />
           }} />

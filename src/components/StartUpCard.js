@@ -79,7 +79,7 @@ class StartUpCard extends React.Component {
         {this.state.liked ?
           <img className='like-stamp' alt="like stamp" src={process.env.PUBLIC_URL + '/like-stamp.png'} /> :
           <Button type="default" icon="like" size='small' className='login-buttons' onClick={this.handleLikes}>LIKE</Button>}
-        <Button type="default" icon="dislike" size='small' className='login-buttons' onClick={this.handleDisLikes}>NO THANKS</Button>
+          <Button type="default" icon="dislike" size='small' className='login-buttons' onClick={this.handleDisLikes}>NO THANKS</Button>
       </div>
     )
   }
