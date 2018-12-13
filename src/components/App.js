@@ -108,7 +108,6 @@ class App extends Component {
   }
 
   register = () => {
-    debugger
     if (this.state.form.type === 'startup') {
       StartUpsAdapter.create(this.state.form)
         .then(json => {
