@@ -14,8 +14,8 @@ class App extends Component {
     form: {
       loggedIn: false,
       signingUp: false,
-      username: '',
-      password: '',
+      username: 'demo',
+      password: 'demo',
       password_confirmation: '',
       name: '',
       mission: '',
