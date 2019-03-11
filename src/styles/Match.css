@@ -14,13 +14,12 @@ div.ant-col-8.start-up-card {
   border: solid white;
   overflow: scroll;
   border-radius: 10%;
-  transform: scale3d(0.998, 0.998, 1);
+  transform: scale3d(0.994, 0.994, 1);
   transition: all .3s linear;
 }
 
 .start-up-card:hover {
-  height: 24.2rem;
-  transform: scale3d(1.008, 1.008, 1);
+  transform: scale3d(1, 1, 1);
   box-shadow: 0 8px 18px 0 rgba(0, 0, 0, .3), 0 6px 20px 0 rgba(0, 0, 0, .15);
   z-index: 20;
   background: #DDDDDF;
